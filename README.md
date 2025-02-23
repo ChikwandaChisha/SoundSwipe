@@ -31,7 +31,7 @@ New Search will give users the ability to customize their music search with vari
 
 To set up the project dev environment do the following:
 - `git clone https://github.com/dartmouth-cs52-25w/project-soundswipe/tree/main`
-- `cd project-soundswipe`
+- `cd project-soundswipe/mobile-app`
 - `npm install`
 - `npx expo start --tunnel`
 - Scan QR code to view our app in Expo Go!

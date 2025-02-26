@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Animated, TextInput, TouchableOpacity, ActivityIndicator, Dimensions, PanResponder } from 'react-native';
 
-const API_URL = "https://project-api-soundswipe.onrender.com/";
+const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
 const { height } = Dimensions.get("window");
 

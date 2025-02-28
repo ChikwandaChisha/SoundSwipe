@@ -56,7 +56,7 @@ export function LoginScreen({ navigation }) {
   
     const handleLogin = () => {
         // will need api logic
-      navigation.replace("FeedScreen");
+      navigation.replace("HomeScreen");
     };
   
     return (

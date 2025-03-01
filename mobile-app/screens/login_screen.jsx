@@ -15,9 +15,10 @@ export function LoginScreen({ navigation }) {
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   
     const translateY = useRef(new Animated.Value(0)).current;
-    const opacity = useRef(new Animated.Value(1)).current;
+    // const opacity = useRef(new Animated.Value(1)).current;
   
     useEffect(() => {
       fetch(API_URL)
@@ -40,19 +41,19 @@ export function LoginScreen({ navigation }) {
         if (gesture.dy < 0) { //only can move up
           const newY = Math.max(-height, gesture.dy);
           translateY.setValue(newY);
-          opacity.setValue(Math.max(0, 1 + newY / 300));
+        //   opacity.setValue(Math.max(0, 1 + newY / 300));
         }
       },
       onPanResponderRelease: (_, gesture) => {
         if (gesture.dy < -300) { // if far enough do animation
           Animated.parallel([
             Animated.timing(translateY, { toValue: -height, useNativeDriver: false}),
-            Animated.timing(opacity, { toValue: 0, useNativeDriver: false })
+            // Animated.timing(opacity, { toValue: 0, useNativeDriver: false })
           ]).start();
         } else {
           Animated.parallel([ //otherwise reset
             Animated.timing(translateY, { toValue: 0, useNativeDriver: false}),
-            Animated.timing(opacity, { toValue: 1, useNativeDriver: false})
+            // Animated.timing(opacity, { toValue: 1, useNativeDriver: false})
           ]).start();
         }
       }
@@ -60,12 +61,12 @@ export function LoginScreen({ navigation }) {
   
     const handleLogin = () => {
         // will need api logic
-      navigation.replace("HomeScreen");
+      navigation.replace("CreateSearchScreen");
     };
   
     return (
         <View style={styles.container}>
-            <Animated.View {...panResponder.panHandlers} style={[styles.landingScreen, { transform: [{ translateY }], opacity }]}>
+            <Animated.View {...panResponder.panHandlers} style={[styles.landingScreen, { transform: [{ translateY }] }]}>
                 <View style={styles.landingScreenText}>
                     <Text style={styles.title}>SOUNDSWIPE</Text>
                     <Text style={styles.subtitle}>Discover New Music Instantly.</Text>
@@ -89,11 +90,29 @@ export function LoginScreen({ navigation }) {
             </Animated.View>
 
             <View style={styles.loginScreen}>
-                <Text style={styles.loginTitle}>SOUNDSWIPE</Text>
-                <Text style={styles.loginSubtitle}>Login with your Apple Music username and password below</Text>
-                <Text style={styles.subtitle}>Please note openAI will be used to help improve and fully customize your recommendations</Text>
-                <TextInput placeholder="Username" placeholderTextColor="#aaa" style={styles.input} value={username} onChangeText={setUsername} />
-                <TextInput placeholder="Password" placeholderTextColor="#aaa" secureTextEntry style={styles.input2} value={password} onChangeText={setPassword} />
+                <Text style={[styles.loginTitle, isKeyboardActive && styles.shrinkTitle ]}>SOUNDSWIPE</Text>
+                <Text style={styles.loginSubtitle}>Login with your Apple Music username and password below.</Text>
+                <Text style={styles.loginSubtitle2}>Please note you must have an existing Apple Music account to use this app. This login is used to sign in directly to Apple Music for a seemless integration, we do not store your login information.</Text>
+                <TextInput 
+                placeholder="Apple Music Username" 
+                placeholderTextColor="#aaa" 
+                style={[styles.input]} 
+                value={username} 
+                onChangeText={setUsername} 
+                onFocus={() => setIsKeyboardActive(true)}
+                onBlur={() => setIsKeyboardActive(false)}
+
+                />
+                <TextInput
+                placeholder="Apple Music Password" 
+                placeholderTextColor="#aaa" 
+                secureTextEntry 
+                style={styles.input2} 
+                value={password} o
+                onChangeText={setPassword} 
+                onFocus={() => setIsKeyboardActive(true)}
+                onBlur={() => setIsKeyboardActive(false)}
+                />
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login to Apple Music</Text>
                 </TouchableOpacity>
@@ -107,18 +126,17 @@ export function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E88548',
   },
 
   landingScreen: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#E88548',
+    backgroundColor: '#FF8000',
     alignItems: 'center',
     justifyContent: 'flex-end',
     zIndex: 3, 
   },
   landingScreenText: {
-    backgroundColor: '#E88548',
+    backgroundColor: '#FF8000',
     alignItems: 'center',
     justifyContent: 'start',
   },
@@ -130,11 +148,18 @@ const styles = StyleSheet.create({
     fontfamily: "Josefin Sans",
     fontWeight: 700,
 },
+shrinkTitle: {
+    fontSize: 45,
+    color: '#000',
+    marginTop: 70,
+    fontfamily: "Josefin Sans",
+    fontWeight: 700,
+},
 loginTitle: {
     fontSize: 45,
     color: '#000',
     marginTop: 120,
-    marginBottom: 50,
+    marginBottom: 40,
     fontfamily: "Josefin Sans",
     fontWeight: 700,
 },
@@ -159,16 +184,17 @@ loginTitle: {
     paddingLeft: 10,
     paddingRight: 10
   },
-//   statusBox: {
-//     padding: 15,
-//     backgroundColor: '#282828',
-//     borderRadius: 10,
-//     marginBottom: 20,
-//   },
-//   apiMessage: {
-//     color: '#fff',
-//     fontSize: 14,
-//   },
+  
+  loginSubtitle2: {
+    fontSize: 18,
+    color: '#333',
+    marginBottom: 0,
+    textAlign: 'center',
+    fontWeight: 300,
+    fontfamily: "Josefin Sans",
+    paddingLeft: 10,
+    paddingRight: 10
+  },
 
   dragContainer: {
     position: 'absolute',
@@ -210,7 +236,7 @@ icontext:{
 
   loginScreen: {
     flex: 1,
-    backgroundColor: '#D7C081',
+    backgroundColor: '#EA9A4A',
     alignItems: 'center',
     justifyContent: 'flex-start',
     zIndex: 2, 
@@ -220,7 +246,7 @@ icontext:{
     width: '80%',
     height: 60,
     backgroundColor: '#fff',
-    color: '#0000',
+    color: 'black',
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
@@ -231,7 +257,7 @@ icontext:{
     width: '80%',
     height: 60,
     backgroundColor: '#fff',
-    color: '#0000',
+    color: '#000000',
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
@@ -240,7 +266,7 @@ icontext:{
   button: {
     width: '70%',
     height: 90,
-    backgroundColor: '#EA9A4A',
+    backgroundColor: '#FF8000',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,

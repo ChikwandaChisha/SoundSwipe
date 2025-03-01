@@ -6,7 +6,7 @@ import notesGif from '../assets/notesGif.gif';
 import swipeIcon from '../assets/swipeIcon.png';
 
 
-const API_URL = "https://project-api-soundswipe.onrender.com/";
+const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
 const { height, width } = Dimensions.get("window");
 
@@ -61,7 +61,7 @@ export function LoginScreen({ navigation }) {
   
     const handleLogin = () => {
         // will need api logic
-      navigation.replace("CreateSearchScreen");
+      navigation.replace("HomeScreen");
     };
   
     return (
@@ -74,9 +74,9 @@ export function LoginScreen({ navigation }) {
                     <Text style={styles.subtitle}>Getter better recommendations and build new playlists with the songs you like.</Text>
                 </View>
 
-                {/* <View style={styles.statusBox}>
-                    {loading ? <ActivityIndicator size="large" color="#00bfff" /> : <Text style={styles.apiMessage}>{message}</Text>}
-                </View> */}
+                <View style={styles.statusBox}>
+                    {loading ? <ActivityIndicator /> : <Text style={styles.apiMessage}>{message}</Text>}
+                </View>
 
                 <Image source={notesGif} style={styles.notesGif} cachePolicy="none" contentFit="cover" />
                 <Image source={snoopyGif} style={styles.gif} cachePolicy="none" contentFit="cover" />

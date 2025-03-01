@@ -69,6 +69,9 @@ const styles = StyleSheet.create({
     },
     back: {
         backgroundColor: 'grey',
+        width: 300,
+        height: 500,
+        
     },
     image: {
         width: 250,

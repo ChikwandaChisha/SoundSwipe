@@ -5,7 +5,6 @@ import snoopyGif from '../assets/snoopyGif.gif';
 import notesGif from '../assets/notesGif.gif';
 import swipeIcon from '../assets/swipeIcon.png';
 
-
 const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
 const { height, width } = Dimensions.get("window");

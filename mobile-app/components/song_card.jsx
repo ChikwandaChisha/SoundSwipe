@@ -47,7 +47,6 @@ const SongCard = ({ songs, currentIndex, onSkip }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.instructions}>Swipe Up to Skip</Text>
 
             {/* next song (behind, increasing opacity) */}
             {songs[currentIndex + 1] && (
@@ -98,11 +97,6 @@ const styles = StyleSheet.create({
         margin: 10,
         width: 393,
         height: 650,
-    },
-    instructions: {
-        fontSize: 14,
-        color: 'gray',
-        marginBottom: 10,
     },
     actions: {
         flexDirection: 'row',

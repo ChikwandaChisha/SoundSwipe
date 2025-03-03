@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
   const [sessions, setSessions] = useState([]);
+
+const goToCreateSearch = () => {
+  navigation.replace("CreateSearchScreen");
+};
 
   useEffect(() => {
     fetchRecentSessions();
@@ -22,6 +26,8 @@ const ProfileScreen = () => {
       console.error('Error fetching sessions:', error);
     }
   };
+
+
 
   const renderSession = ({ item }) => (
     <View style={styles.sessionContainer}>
@@ -51,7 +57,7 @@ const ProfileScreen = () => {
       />
 
       {/* New Search Button */}
-      <TouchableOpacity style={styles.searchButton}>
+      <TouchableOpacity style={styles.searchButton} onPress={goToCreateSearch}>
         <Text style={styles.searchButtonText}>Create New Search</Text>
       </TouchableOpacity>
     </View>
@@ -69,6 +75,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 20
   },
   profileSection: {
     flexDirection: 'row',
@@ -119,6 +126,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 25,
     marginTop: 20,
+    marginBottom: 40
   },
   searchButtonText: {
     color: '#fff',

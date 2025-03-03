@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Icon } from 'react-native';
+import { CheckBox } from '@rneui/themed';
 // import Animated, {
 //   interpolate,
 //   useAnimatedStyle,
@@ -10,6 +11,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Icon } from
 // import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const PlaylistTile = ({
+    cover,
     title,
     artist,
     playlists,
@@ -17,22 +19,42 @@ const PlaylistTile = ({
 
   const [addedPlaylists, setAddedPlaylists] = useState({});
 
-  const togglePlaylist = (item) => {
+  const togglePlaylist = (item, checked) => {
     setAddedPlaylists((prevState) => ({
       ...prevState,
-      [playlist]: !prevState[playlis],
+      [item]: checked,
     }));
   };
 
-  const addSong = ([playlists]) => {
-    //add song to playlists through API here
+  const PlaylistItem = ({playlist, cover, togglePlaylist}) => {
+    const [checked, setChecked] = useState(false);
+    const toggleCheckbox = () => setChecked(!checked);
+    
+    return (
+      <View style={styles.playlistContainer}>
+        <Image style={styles.playlistCover} source={{uri:cover}} />
+        <Text>Title</Text>
+        <TouchableOpacity onPress={() => togglePlaylist(playlist, checked)} >
+          <CheckBox
+          style={styles.playlistAdd}
+          checked={checked}
+          checkedIcon="heart"
+          uncheckedIcon="plus"
+          checkedColor="red"
+          onPress={toggleCheckbox}
+          size={18}
+          center={true}
+          />
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <View style={styles.currentSong}>
-          <Image source={"https://cdn-icons-png.freepik.com/512/5997/5997002.png"} style={styles.profilePic} />
+          <Image source={{uri:cover}} style={styles.songCover} />
           <View style={styles.songText}>
             <Text style={styles.songTitle}>{title}</Text>
             <Text style={styles.songArtist}>{artist}</Text>
@@ -42,24 +64,18 @@ const PlaylistTile = ({
           <Text>Add to Playlist</Text>
           <View style={styles.playlistList}>
           {playlists.map((playlist, index)=> (
-            <View key={index} style={styles.playlistContainer}>
-              <Image></Image>
-              <Text>Title</Text>
-              <TouchableOpacity onPress={() => togglePlaylist(playlist)}>
-                <Text>Add</Text>
-              {/* <Icon
-                  name={addedPlaylists[playlist.id] ? 'check' : 'plus'}
-                  size={24}
-                  color={addedPlaylists[playlist.id] ? 'green' : 'black'}
-                /> */}
-              </TouchableOpacity>
-          </View>
+            <PlaylistItem
+            key={index}
+            cover={"https://images.unsplash.com/photo-1740738174801-12a109f9acd3?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D"}
+            playlist={playlist}
+            togglePlaylist={togglePlaylist}
+            />
           ))}
         </View>
         </View>
       </View>
-
     </View>
+    
 
   )
 };
@@ -86,6 +102,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  songCover: {
+    width: 50,
+    height: 50,
+    borderRadius: 3,
+  },
   songText: {
     fontSize: 10,
   },
@@ -93,14 +114,25 @@ const styles = StyleSheet.create({
     width: 225,
     height: 300,
     borderRadius: 10,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     padding: 25,
     alignItems: 'center',
+    rowGap: 10,
   },
   playlistContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
-  }
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    columnGap: 50,
+  },
+  playlistCover: {
+    width: 30,
+    height: 30,
+  },
+  playlistAdd: {
+    size: 10,
+    backgroundColor: 'green',
+  },
 
 });
 

@@ -36,7 +36,6 @@ export default function FeedScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text style={styles.text}>SOUNDSWIPE</Text>
       <View style={styles.cardContainer}>
         <SongCard 
           songs={songs} 
@@ -56,15 +55,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    fontSize: 24,
-    color: '#1DB954',
-    marginBottom: 20,
-  },
   cardContainer: {
     width: 393,
     height: 650,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });   

@@ -1,17 +1,50 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Pressable } from 'react-native';
 import FlipCard from 'react-native-flip-card'
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const MusicTile = ({
     title,
     artist,
     albumCover,
 }) => {
-    const [isFlipped, setIsFlipped] = useState(false);
+    const rotate = useSharedValue(0);
+    const frontAnimations = useAnimatedStyle(()=>{
+      const rotateVal = interpolate(rotate.value, [0,1], [0,180])
+      return {
+        transform: [
+          {
+            rotateY : withTiming(`${rotateVal}deg`,{duration: 1000}),
+          }
+        ],
+        pointerEvents: rotate.value === 0 ? 'auto' : 'none',
+      }
+    })
+    const backAnimations = useAnimatedStyle(()=>{
+      const rotateVal = interpolate(rotate.value, [0,1], [180,0])
+      return {
+        transform: [
+          {
+            rotateY : withTiming(`${rotateVal}deg`,{duration: 1000}),
+          }
+        ],
+        pointerEvents: rotate.value === 1 ? 'auto' : 'none',
+      }
+    })
+    const handleFlip = () => {
+      console.log(rotate.value);
+      rotate.value = rotate.value ? 0 : 1;
+      };
 
     return (
     <View style={styles.container}>
-      <FlipCard 
+      <View style={styles.cardContainer}>
+      {/* <FlipCard 
         style={styles.card}
         friction={6}
         perspective={1000}
@@ -20,25 +53,30 @@ const MusicTile = ({
         flip={isFlipped}
         clickable={false}
         onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
-        >
-    <View style={[styles.face, styles.front]}>
-      <Image source={{uri:albumCover}} style={styles.image} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.artist}>{artist}</Text>
-      <Pressable style={styles.playButton}>
-        <Text style={styles.playText}>▶</Text>
-      </Pressable>
-      <TouchableOpacity  style={styles.playButton} onPress={()=>setIsFlipped(!isFlipped)}>
-        <Text style={styles.playText}>...</Text>
-      </TouchableOpacity>
+        > */}
+      <Animated.View style={[styles.card, styles.front, frontAnimations]}>
+        <View style={[styles.face]}>
+          <Image source={{uri:albumCover}} style={styles.image} />
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.artist}>{artist}</Text>
+          <Pressable style={styles.playButton}>
+            <Text style={styles.playText}>▶</Text>
+          </Pressable>
+          <TouchableOpacity  style={styles.playButton} onPress={handleFlip}>
+            <Text style={styles.playText}>...</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+      <Animated.View style={[styles.card, styles.back, backAnimations]}>
+        <View style={[styles.face]}>
+          <Text>The Back</Text>
+          <TouchableOpacity  style={styles.playButton} onPress={handleFlip}>
+            <Text style={styles.playText}>...</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    {/* </FlipCard> */}
     </View>
-    <View style={[styles.face, styles.back]}>
-      <Text>The Back</Text>
-      <TouchableOpacity  style={styles.playButton} onPress={()=>setIsFlipped(!isFlipped)}>
-        <Text style={styles.playText}>...</Text>
-      </TouchableOpacity>
-    </View>
-    </FlipCard>
   </View>
 
     );
@@ -46,52 +84,52 @@ const MusicTile = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
         alignItems: 'center',
     },
-    card: {
-        width: 300,
-        height: 500,
-        borderRadius: 20,
-        margin: 10,
-        elevation: 5,
+  cardContainer: {
+      width: 300,
+      height: 400,
+      position: 'relative',
+      },
+  card: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 20,
+      position: 'absolute',
+      backfaceVisibility: 'hidden',
+      },
+  face: {
+      flex: 1,
+      borderRadius: 20,
+      padding: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    face: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 20,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
+  front: {
+      backgroundColor: '#EA9A4A',
     },
-    front: {
-        backgroundColor: '#d68e47',
+  back: {
+      backgroundColor: 'grey',
     },
-    back: {
-        backgroundColor: 'grey',
-        width: 300,
-        height: 500,
-        
-    },
-    image: {
-        width: 250,
-        height: 250,
+  image: {
+        width: 175,
+        height: 175,
         borderRadius: 15,
         marginBottom: 15,
     },
-    title: {
+  title: {
         fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    artist: {
+  artist: {
         fontSize: 16,
         color: '#555',
         marginBottom: 10,
         textAlign: 'center',
     },
-    playButton: {
-        backgroundColor: '#ffffff',
+  playButton: {
         borderRadius: 50,
         width: 40,
         height: 40,
@@ -99,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-    playText: {
+  playText: {
         fontSize: 25,
         alignSelf: "center",
     },

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Pressable } from 'react-native';
-import FlipCard from 'react-native-flip-card'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -142,7 +141,5 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
 });
-
-
 
 export default MusicTile;

@@ -68,7 +68,7 @@ const goToCreateSearch = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C49A6C',
+    backgroundColor: '#EA9A4A',
     alignItems: 'center',
     paddingTop: 50,
   },

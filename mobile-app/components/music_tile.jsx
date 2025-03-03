@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
   front: {
-      backgroundColor: '#EA9A4A',
+      backgroundColor: '#d68e47',
     },
   back: {
       backgroundColor: 'grey',
@@ -142,7 +142,5 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
 });
-
-
 
 export default MusicTile;

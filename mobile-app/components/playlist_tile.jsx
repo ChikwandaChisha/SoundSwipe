@@ -44,7 +44,7 @@ const PlaylistTile = ({
           {playlists.map((playlist, index)=> (
             <View key={index} style={styles.playlistContainer}>
               <Image></Image>
-              <Text>Playlist Title</Text>
+              <Text>Title</Text>
               <TouchableOpacity onPress={() => togglePlaylist(playlist)}>
                 <Text>Add</Text>
               {/* <Icon
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   playlistContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 
 });

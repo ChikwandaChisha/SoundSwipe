@@ -13,7 +13,7 @@ export default function PlaylistScreen () {
       cover={"https://i1.sndcdn.com/artworks-CCbZ4mG3Juom-0-t500x500.jpg"}
       title={'Naive'}
       artist={'The Kooks'}
-      playlists={['happy', 'sad', 'fall songs']}
+      playlists={['happy', 'sad', 'fall songs and lots of leaves falling']}
       />
     </View>
   )

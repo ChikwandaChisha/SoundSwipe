@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Icon } from 'react-native';
 import { CheckBox } from '@rneui/themed';
+import { CheckCircleFilled } from '@ant-design/icons';
 // import Animated, {
 //   interpolate,
 //   useAnimatedStyle,
@@ -25,7 +26,6 @@ const PlaylistTile = ({
       [item]: checked,
     }));
   };
-
   const PlaylistItem = ({playlist, cover, togglePlaylist}) => {
     const [checked, setChecked] = useState(false);
     const toggleCheckbox = () => setChecked(!checked);
@@ -33,17 +33,19 @@ const PlaylistTile = ({
     return (
       <View style={styles.playlistContainer}>
         <Image style={styles.playlistCover} source={{uri:cover}} />
-        <Text>Title</Text>
+        <Text style={styles.playlistTitle} numberOfLines={1} ellipsizeMode="tail">{playlist}</Text>
         <TouchableOpacity onPress={() => togglePlaylist(playlist, checked)} >
           <CheckBox
           style={styles.playlistAdd}
           checked={checked}
-          checkedIcon="heart"
-          uncheckedIcon="plus"
-          checkedColor="red"
+          checkedIcon="check-circle"
+          uncheckedIcon="plus-circle"
+          uncheckedColor='black'
+          checkedColor="green"
           onPress={toggleCheckbox}
-          size={18}
+          size={23}
           center={true}
+          containerStyle={{ backgroundColor: 'transparent', margin: 0, padding: 0 }}
           />
         </TouchableOpacity>
       </View>
@@ -61,7 +63,7 @@ const PlaylistTile = ({
            </View>
         </View>
         <View style={styles.addSong}>
-          <Text>Add to Playlist</Text>
+          <Text style={styles.title}>Select Playlists</Text>
           <View style={styles.playlistList}>
           {playlists.map((playlist, index)=> (
             <PlaylistItem
@@ -93,12 +95,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#d68e47',
   },
   currentSong: {
-    width: 200,
+    width: 225,
     height: 100,
     borderRadius: 10,
     backgroundColor: 'white',
     padding: 15,
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -109,30 +111,52 @@ const styles = StyleSheet.create({
   },
   songText: {
     fontSize: 10,
+    rowGap: 3,
+  },
+  songTitle: {
+    fontSize: 18,
+  },
+  songArtist: {
+    fontSize: 15,
   },
   addSong: {
-    width: 225,
-    height: 300,
+    width: 250,
+    height: 320,
     borderRadius: 10,
     backgroundColor: 'white',
     padding: 25,
     alignItems: 'center',
+    rowGap: 20,
+  },
+  title: {
+    fontSize: 20,
+  },
+  playlistList: {
+    width: 250,
     rowGap: 10,
   },
   playlistContainer: {
+    // width: 220,
+    // marginLeft: 10,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    columnGap: 50,
+    columnGap: 10,
+    padding: 5,
+    paddingRight: 0,
+    backgroundColor: 'lightPink',
+    borderRadius: 5,
   },
   playlistCover: {
     width: 30,
     height: 30,
+    borderRadius: 2,
   },
-  playlistAdd: {
-    size: 10,
-    backgroundColor: 'green',
-  },
+  playlistTitle: {
+    width: 100,
+    textAlign: 'left',
+    fontSize: 18,
+  }
 
 });
 

@@ -7,6 +7,11 @@ export default function FeedScreen({ navigation }) {
   const handleAddSong = () => {
     navigation.replace("PlaylistScreen");
   }
+
+  const fetchPlaylists = (token) => {
+    //call api here
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>This is Your Feed</Text>

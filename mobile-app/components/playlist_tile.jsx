@@ -16,38 +16,43 @@ const PlaylistTile = ({
     title,
     artist,
     playlists,
+    addSong,
 }) => {
 
   const [addedPlaylists, setAddedPlaylists] = useState({});
 
-  const togglePlaylist = (item, checked) => {
-    setAddedPlaylists((prevState) => ({
-      ...prevState,
-      [item]: checked,
-    }));
-  };
+  const togglePlaylist = (playlist) => {
+    setAddedPlaylists(prevState => {
+    const isSelected = Boolean(prevState[playlist]);
+    // Toggle the selected value
+    return { ...prevState, [playlist]: !isSelected };
+    });
+    };
+  
   const PlaylistItem = ({playlist, cover, togglePlaylist}) => {
-    const [checked, setChecked] = useState(false);
-    const toggleCheckbox = () => setChecked(!checked);
+    const checked = Boolean(addedPlaylists[playlist]);
+    const toggleCheckbox = () => {
+      togglePlaylist(playlist);
+    }
     
     return (
       <View style={styles.playlistContainer}>
         <Image style={styles.playlistCover} source={{uri:cover}} />
         <Text style={styles.playlistTitle} numberOfLines={1} ellipsizeMode="tail">{playlist}</Text>
-        <TouchableOpacity onPress={() => togglePlaylist(playlist, checked)} >
+        <Pressable >
           <CheckBox
           style={styles.playlistAdd}
           checked={checked}
           checkedIcon="check-circle"
           uncheckedIcon="plus-circle"
-          uncheckedColor='black'
-          checkedColor="green"
+          uncheckedColor='#6d7570'
+          checkedColor='#33de60'
           onPress={toggleCheckbox}
           size={23}
           center={true}
           containerStyle={{ backgroundColor: 'transparent', margin: 0, padding: 0 }}
           />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     );
   };
@@ -75,6 +80,9 @@ const PlaylistTile = ({
           ))}
         </View>
         </View>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.buttonText} onPress={console.log(addedPlaylists)}>Add Song</Text>
+        </TouchableOpacity>
       </View>
     </View>
     
@@ -100,13 +108,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     padding: 15,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    columnGap: 15,
   },
   songCover: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     borderRadius: 3,
   },
   songText: {
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
   },
   addSong: {
     width: 250,
-    height: 320,
+    height: 300,
     borderRadius: 10,
     backgroundColor: 'white',
     padding: 25,
@@ -156,6 +165,11 @@ const styles = StyleSheet.create({
     width: 100,
     textAlign: 'left',
     fontSize: 18,
+  },
+  addButton: {
+    backgroundColor: '#f7c697',
+    padding: 8,
+    borderRadius: 3,
   }
 
 });

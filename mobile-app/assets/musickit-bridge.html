@@ -1,0 +1,47 @@
+<!-- musickit-bridge.html -->
+<!DOCTYPE html>
+<html>
+
+<!-- This assets file was generated entirely by ChatGPT o1 - wb -->
+<head>
+  <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
+</head>
+
+<body>
+  <script>
+    // Wait for MusicKit to load
+    document.addEventListener('DOMContentLoaded', () => {
+      // We'll listen for messages from the React Native side
+      document.addEventListener('message', async (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'configure') {
+          // configure dev token
+          MusicKit.configure({
+            developerToken: data.devToken,
+            app: { name: 'SoundSwipeRN', build: '1.0.0' }
+          });
+          window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: 'configured'
+          }));
+        } else if (data.type === 'authorize') {
+          try {
+            console.log('authorize() invoked');
+            const musicUserToken = await MusicKit.getInstance().authorize();
+            console.log('authorize() sucess');
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'authorized',
+              userToken: musicUserToken
+            }));
+          } catch (err) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'error',
+              error: err.toString()
+            }));
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

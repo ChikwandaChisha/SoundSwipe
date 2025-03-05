@@ -10,6 +10,7 @@ export function CreateSearchScreen({ navigation }) {
   const handleCreateSearch = () => {
     // connect api and send inputs to backend
     console.log({ name, genre, instruments, similarSongs });
+    navigation.replace("FeedScreen");
   };
 
   const goBack = () => {

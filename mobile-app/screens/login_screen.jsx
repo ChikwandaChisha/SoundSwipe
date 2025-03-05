@@ -60,7 +60,7 @@ export function LoginScreen({ navigation }) {
   
     const handleLogin = () => {
         // will need api logic
-      navigation.replace("HomeScreen");
+      navigation.replace("ProfileScreen");
     };
   
     return (

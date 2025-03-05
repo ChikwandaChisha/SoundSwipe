@@ -29,6 +29,16 @@ const PlaylistTile = ({
     });
     };
   
+  const onAddSong = () => {
+    const finalPlaylists = [];
+    Object.keys(addedPlaylists).forEach((key) => {
+      if (addedPlaylists[key] === true) {
+        finalPlaylists.push(key);
+      }
+    });
+    addSong(finalPlaylists);
+  }
+  
   const PlaylistItem = ({playlist, cover, togglePlaylist}) => {
     const checked = Boolean(addedPlaylists[playlist]);
     const toggleCheckbox = () => {
@@ -80,8 +90,8 @@ const PlaylistTile = ({
           ))}
         </View>
         </View>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.buttonText} onPress={console.log(addedPlaylists)}>Add Song</Text>
+        <TouchableOpacity style={styles.addButton} onPress={onAddSong}>
+          <Text style={styles.buttonText}>Add Song</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -143,6 +153,7 @@ const styles = StyleSheet.create({
   playlistList: {
     width: 250,
     rowGap: 10,
+    overflowY: 'scroll'
   },
   playlistContainer: {
     // width: 220,
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   playlistTitle: {
-    width: 100,
+    width: 115,
     textAlign: 'left',
     fontSize: 18,
   },

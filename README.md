@@ -29,12 +29,20 @@ New Search will give users the ability to customize their music search with vari
 
 ## Setup
 
-To set up the project dev environment do the following:
-- `git clone https://github.com/dartmouth-cs52-25w/project-soundswipe/tree/main`
-- `cd project-soundswipe/mobile-app`
-- `npm install`
-- `npx expo start --tunnel`
-- Scan QR code to view our app in Expo Go!
+To set up the project development environment, following the instructions below:
+1. Clone the repository:
+```
+git clone https://github.com/dartmouth-cs52-25w/project-soundswipe/tree/main
+```
+2. Install dependencies:
+```
+npm install
+```
+3. Start the development server:
+```
+npx expo start --tunnel
+```
+4. You should now see a QR code. Scan it to view our app in Expo Go!
 
 ## Deployment
 
@@ -42,7 +50,7 @@ TBD
 
 ## Authors
 
-Written by the whole team
+Kellen Seeley, Will Beeson, Daniel Amoeteng, Chikwanda Chisha, Maddy Slater, and Chloe Yoo
 
 ## Acknowledgments
 

@@ -5,7 +5,6 @@ import LoginScreen from './screens/login_screen';
 import ProfileScreen from './screens/profile_screen';
 import FeedScreen from './screens/feed_screen';
 import CreateSearchScreen from './screens/createSearch_screen';
-import FeedScreen from './screens/feed_screen';
 import PlaylistScreen from './screens/playlist_screen';
 
 const Stack = createStackNavigator();

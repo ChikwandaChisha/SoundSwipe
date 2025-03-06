@@ -73,7 +73,7 @@ const MusicTile = ({
         <View style={[styles.face]}>
           <Text>The Back</Text>
           <TouchableOpacity  style={styles.playButton} onPress={handleFlip}>
-            <Text style={styles.playText}>...</Text>
+            <Text style={styles.playTextBack}>...</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
       flex: 1,
       borderRadius: 20,
       padding: 20,
-      justifyContent: 'center',
+      justifyContent: 'start',
       alignItems: 'center',
     },
   front: {
@@ -118,21 +118,24 @@ const styles = StyleSheet.create({
       backgroundColor: 'grey',
     },
   image: {
-        width: 175,
-        height: 175,
+        width: 250,
+        height: 250,
         borderRadius: 15,
         marginBottom: 15,
+        marginTop: 20
     },
   title: {
         fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center',
+        marginTop: 20
     },
   artist: {
         fontSize: 16,
         color: '#555',
         marginBottom: 10,
         textAlign: 'center',
+        marginTop: 15
     },
   playButton: {
         borderRadius: 50,
@@ -141,11 +144,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
+        marginTop: 30
     },
   playText: {
-        fontSize: 25,
+        fontSize: 40,
         alignSelf: "center",
+        marginTop: 20
     },
+    playTextBack: {
+      fontSize: 40,
+      alignSelf: "center",
+      marginTop: 900,
+      justifyContent: 'flex-end'
+  },
 });
 
 export default MusicTile;

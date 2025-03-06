@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
+</head>
+
+<body>
+  <script>
+    window.addEventListener('message', async (event) => {
+      console.log('[Bridge] Received event:', event.data);
+
+      const data = JSON.parse(event.data);
+
+      if (data.type === 'configure') {
+        console.log('[Bridge] Configuring MusicKit with devToken:', data.devToken);
+        try {
+          MusicKit.configure({
+            developerToken: data.devToken,
+            app: { name: 'SoundSwipe', build: '1.0.0' }
+          });
+
+          console.log('[Bridge] MusicKit configured!');
+          window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'configured' }));
+        } catch (error) {
+          console.error('[Bridge] configure error:', error);
+          window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', error: error.toString() }));
+        }
+      }
+
+      if (data.type === 'authorize') {
+        console.log('[Bridge] Skipping authorization. Sending hardcoded MUT.');
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'authorized', userToken: "AhiU39Ubv3E0r2Bbdkaw+MVrFENQGH3pGhaKtpg4nBbp4IunVIRMzqFoR8qHNQwJgnMP1bpxkOlV3iseIutarZOxPJBNPUEZIRXS9nz3znyYwd4Y3X4HeSvqzWr39sElh3Uo7tYBjaDhOkz2w2s1iX19zzkrA6Uw8LejmIbRQg2Y6WZ5DtIBsdH4ALN74NQNh5O5IQRkHi4BMWWEMXVr/TBx+m61G8YAcDOwkGd45IVatxhCTw==" }));
+      }
+    });
+
+    // Notify WebView that the bridge has loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'bridge-ready' }));
+    });
+  </script>
+</body>
+
+</html>

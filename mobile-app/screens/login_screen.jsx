@@ -1,9 +1,11 @@
+// screens/login_screen.jsx
 import { StatusBar } from 'expo-status-bar';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Animated, TextInput, TouchableOpacity, ActivityIndicator, Dimensions, PanResponder, Image } from 'react-native';
 import snoopyGif from '../assets/snoopyGif.gif';
 import notesGif from '../assets/notesGif.gif';
 import swipeIcon from '../assets/swipeIcon.png';
+import { signInAndEnsureUserDoc } from '../services/authService';
 
 const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
@@ -12,9 +14,10 @@ const { height, width } = Dimensions.get("window");
 export function LoginScreen({ navigation }) {
     const [message, setMessage] = useState("Connecting to SoundSwipe...");
     const [loading, setLoading] = useState(true);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isKeyboardActive, setIsKeyboardActive] = useState(false);
+    // const { authorizeMusicKit, appleMusicUserToken } = useContext(MusicKitContext);
   
     const translateY = useRef(new Animated.Value(0)).current;
     // const opacity = useRef(new Animated.Value(1)).current;
@@ -58,10 +61,53 @@ export function LoginScreen({ navigation }) {
       }
     });
   
-    const handleLogin = () => {
-        // will need api logic
-      navigation.replace("ProfileScreen");
+    // Now with Firebase Authentication, see authService.js
+    const handleLogin = async () => {
+      try {
+        // log in user via Firebase auth
+        const result = await signInAndEnsureUserDoc(email, password);
+        
+        if (result.success) {
+          if (result.existing) {
+          setMessage(`Welcome back, docId: ${result.docId}`);
+          console.log("Navigating to Profile Screen with docId:", result.docId);
+          navigation.replace("ProfileScreen", { docId: result.docId }); // need to integrate docID - profile screen
+          } else {
+          setMessage(`New user created, docId: ${result.docId}`);
+          console.log("Navigating to Profile Screen with docId:", result.docId);
+          navigation.replace("ProfileScreen", { docId: result.docId }); // need to integrate docID - profile screen
+          }
+          
+          // MOVING APPLE MUSIC AUTH LOGIC TO PROFILE SCREEN
+
+          // // now do some sort of navigation / apple music check 
+          // const docId = result.docId;
+          // const userDoc = await getUserDocById(docId);
+
+          // console.log("Beginning check for Apple Music token......");
+          // if (!userDoc.appleMusic?.userToken) {
+          //   // no Apple Music token → prompt them to authorize
+          //   console.log("\nUser does not have Apple Music token\n");
+          //   await authorizeMusicKit();
+          //   if (appleMusicUserToken) {
+          //     // store it in Firestore
+          //     console.log("Storing User Apple Music token in Firestore\n");
+          //     await storeAppleMusicToken(docId, appleMusicUserToken);
+          //   }
+          // } else {
+          //   // they already have a token, so skip
+          //   console.log("User already has Apple Music token");
+          // }
+
+        } else {
+          setMessage(`Error: ${result.error}`);
+        }
+      } catch (err) {
+        console.error('Login failed:', err);
+      }
     };
+
+    // Can add handleSignUp function here later on if we decide
   
     return (
         <View style={styles.container}>
@@ -90,20 +136,20 @@ export function LoginScreen({ navigation }) {
 
             <View style={styles.loginScreen}>
                 <Text style={[styles.loginTitle, isKeyboardActive && styles.shrinkTitle ]}>SOUNDSWIPE</Text>
-                <Text style={styles.loginSubtitle}>Login with your Apple Music username and password below.</Text>
-                <Text style={styles.loginSubtitle2}>Please note you must have an existing Apple Music account to use this app. This login is used to sign in directly to Apple Music for a seemless integration, we do not store your login information.</Text>
+                <Text style={styles.loginSubtitle}>Login with your email and password below.</Text>
+                <Text style={styles.loginSubtitle2}>Please note you must have an existing Apple Music account to use this app. If you have not yet connected your Apple Music account, you will be prompted to do so after logging in.</Text>
                 <TextInput 
-                placeholder="Apple Music Username" 
+                placeholder="Email" 
                 placeholderTextColor="#aaa" 
                 style={[styles.input]} 
-                value={username} 
-                onChangeText={setUsername} 
+                value={email} 
+                onChangeText={setEmail} 
                 onFocus={() => setIsKeyboardActive(true)}
                 onBlur={() => setIsKeyboardActive(false)}
 
                 />
                 <TextInput
-                placeholder="Apple Music Password" 
+                placeholder="Password" 
                 placeholderTextColor="#aaa" 
                 secureTextEntry 
                 style={styles.input2} 
@@ -113,7 +159,7 @@ export function LoginScreen({ navigation }) {
                 onBlur={() => setIsKeyboardActive(false)}
                 />
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Login to Apple Music</Text>
+                    <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
             </View>
 

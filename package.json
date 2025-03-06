@@ -1,0 +1,18 @@
+{
+  "name": "project-soundswipe",
+  "private": true,
+  "workspaces": [
+    "mobile-app",
+    "project-api-soundswipe"
+  ],
+  "scripts": {
+    "start:api": "cd project-api-soundswipe && npm start",
+    "start:mobile": "cd mobile-app && npm start",
+    "dev:api": "cd project-api-soundswipe && npm run dev",
+    "install:all": "npm install && npm run install:mobile && npm run install:api",
+    "install:mobile": "cd mobile-app && npm install",
+    "install:api": "cd project-api-soundswipe && npm install",
+    "clean": "rm -rf node_modules && cd mobile-app && rm -rf node_modules && cd ../project-api-soundswipe && rm -rf node_modules",
+    "reset": "npm run clean && npm run install:all"
+  }
+} 

@@ -1,0 +1,3 @@
+[submodule "project-api-soundswipe"]
+	path = project-api-soundswipe
+	url = https://github.com/dartmouth-cs52-25w/project-api-soundswipe

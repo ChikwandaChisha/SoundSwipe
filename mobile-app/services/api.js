@@ -32,14 +32,51 @@ export async function getUserDocById(docId) {
   return data.user;
 }
 
+// export async function getAppleMusicDevToken() {
+//   // GET /music/dev-token returns Apple Music dev token from backend
+//   const res = await fetch(`${API_URL}/music/dev-token`);
+//   const data = await res.json();
+//   return data.token;
+// }
+
+// Debug version
 export async function getAppleMusicDevToken() {
-  // GET /music/dev-token returns Apple Music dev token from backend
-  const res = await fetch(`${API_URL}/music/dev-token`);
+  const url = `${API_URL}/music/dev-token`;
+  console.log("getAppleMusicDevToken -> fetching:", url);
+
+  try {
+    const res = await fetch(url);
+    console.log("getAppleMusicDevToken -> status:", res.status);
+
+    if (!res.ok) {
+      // If status is not 200–299, read text to see if it’s an error page
+      const errorText = await res.text();
+      console.log("getAppleMusicDevToken -> error text:", errorText);
+      throw new Error(`Dev token fetch failed. Status ${res.status}`);
+    }
+
+    // If we get here, presumably we got a 200
+    const data = await res.json();
+    console.log("getAppleMusicDevToken -> success data:", data);
+    return data; // data should have { token: '...' }
+  } catch (err) {
+    console.error("getAppleMusicDevToken -> caught error:", err);
+    throw err; // re-throw so the caller sees it
+  }
+}
+
+
+export async function getAppleMusicUserToken(docId) {
+  const res = await fetch(`${API_URL}/users/${docId}/apple-music-token`);
   const data = await res.json();
-  return data.token;
+  if (!res.ok) {
+    throw new Error(data.error || 'Could not fetch Apple Music token');
+  }
+  return data; // e.g. { found: true, appleMusicUserToken: "XYZ" }
 }
 
 export async function storeAppleMusicToken(docId, musicUserToken) {
+  // POST /users/:docId/apple-music-token stores Apple Music token in Firestore
   const res = await fetch(`${API_URL}/users/${docId}/apple-music-token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -50,3 +87,4 @@ export async function storeAppleMusicToken(docId, musicUserToken) {
     throw new Error(data.error || 'Could not store Apple Music token');
   }
 }
+

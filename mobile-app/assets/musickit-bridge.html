@@ -11,28 +11,54 @@
   <script>
     // Wait for MusicKit to load
     document.addEventListener('DOMContentLoaded', () => {
-      // We'll listen for messages from the React Native side
-      document.addEventListener('message', async (event) => {
+
+      // DEBUG Post a debug message to show we've loaded
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'bridge-init',
+        message: 'musickit-bridge.html is loaded & listening.'
+      }));
+
+      // We'll listen for messages from the React Native side // Use window.addEventListener (not document.addEventListener!)
+      window.addEventListener('message', async (event) => {
+        // DEBUG ------------------------------
+        console.log('[Bridge] Received event.data:', event.data);
+        // Also post to RN logs
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'bridge-debug',
+          msg: 'Received from RN: ' + event.data
+        })); // --------------------------------
+
         const data = JSON.parse(event.data);
+
         if (data.type === 'configure') {
           // configure dev token
-          MusicKit.configure({
-            developerToken: data.devToken,
-            app: { name: 'SoundSwipeRN', build: '1.0.0' }
-          });
-          window.ReactNativeWebView.postMessage(JSON.stringify({
-            type: 'configured'
-          }));
-        } else if (data.type === 'authorize') {
+          console.log('[Bridge] Handling configure with devToken:', data.devToken);
           try {
-            console.log('authorize() invoked');
+            MusicKit.configure({
+              developerToken: data.devToken,
+              app: { name: 'SoundSwipeRN', build: '1.0.0' }
+            });
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'configured'
+            }));
+          } catch (configErr) {
+            console.error('[Bridge] configure error:', configErr);
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'error',
+              error: configErr.toString()
+            }));
+          }
+        } else if (data.type === 'authorize') {
+          console.log('[Bridge] Handling authorize()');
+          try {
             const musicUserToken = await MusicKit.getInstance().authorize();
-            console.log('authorize() sucess');
+            console.log('[Bridge] Successfully authorized. Token =', musicUserToken);
             window.ReactNativeWebView.postMessage(JSON.stringify({
               type: 'authorized',
               userToken: musicUserToken
             }));
           } catch (err) {
+            console.error('[Bridge] authorize() error:', err);
             window.ReactNativeWebView.postMessage(JSON.stringify({
               type: 'error',
               error: err.toString()

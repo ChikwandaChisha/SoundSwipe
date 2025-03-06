@@ -1,3 +1,4 @@
+// screens/login_screen.jsx
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Animated, TextInput, TouchableOpacity, ActivityIndicator, Dimensions, PanResponder, Image } from 'react-native';
@@ -5,8 +6,6 @@ import snoopyGif from '../assets/snoopyGif.gif';
 import notesGif from '../assets/notesGif.gif';
 import swipeIcon from '../assets/swipeIcon.png';
 import { signInAndEnsureUserDoc } from '../services/authService';
-import { storeAppleMusicToken, getUserDocById } from '../services/api';
-import { MusicKitContext } from '../components/MusicKitProvider';
 
 const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
@@ -18,7 +17,7 @@ export function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isKeyboardActive, setIsKeyboardActive] = useState(false);
-    const { authorizeMusicKit, appleMusicUserToken } = useContext(MusicKitContext);
+    // const { authorizeMusicKit, appleMusicUserToken } = useContext(MusicKitContext);
   
     const translateY = useRef(new Animated.Value(0)).current;
     // const opacity = useRef(new Animated.Value(1)).current;
@@ -71,24 +70,34 @@ export function LoginScreen({ navigation }) {
         if (result.success) {
           if (result.existing) {
           setMessage(`Welcome back, docId: ${result.docId}`);
+          console.log("Navigating to Profile Screen with docId:", result.docId);
+          navigation.replace("ProfileScreen", { docId: result.docId }); // need to integrate docID - profile screen
           } else {
           setMessage(`New user created, docId: ${result.docId}`);
+          console.log("Navigating to Profile Screen with docId:", result.docId);
+          navigation.replace("ProfileScreen", { docId: result.docId }); // need to integrate docID - profile screen
           }
           
-          // now do some sort of navigation / apple music check 
-          const docId = result.docId;
-          const userDoc = await getUserDocById(docId);
-          if (!userDoc.appleMusic?.userToken) {
-            // no Apple Music token → prompt them to authorize
-            await authorizeMusicKit();
-            if (appleMusicUserToken) {
-              // store it in Firestore
-              await storeAppleMusicToken(docId, appleMusicUserToken);
-            }
-          } else {
-            // they already have a token, so skip
-            console.log("User already has Apple Music token");
-          }
+          // MOVING APPLE MUSIC AUTH LOGIC TO PROFILE SCREEN
+
+          // // now do some sort of navigation / apple music check 
+          // const docId = result.docId;
+          // const userDoc = await getUserDocById(docId);
+
+          // console.log("Beginning check for Apple Music token......");
+          // if (!userDoc.appleMusic?.userToken) {
+          //   // no Apple Music token → prompt them to authorize
+          //   console.log("\nUser does not have Apple Music token\n");
+          //   await authorizeMusicKit();
+          //   if (appleMusicUserToken) {
+          //     // store it in Firestore
+          //     console.log("Storing User Apple Music token in Firestore\n");
+          //     await storeAppleMusicToken(docId, appleMusicUserToken);
+          //   }
+          // } else {
+          //   // they already have a token, so skip
+          //   console.log("User already has Apple Music token");
+          // }
 
         } else {
           setMessage(`Error: ${result.error}`);

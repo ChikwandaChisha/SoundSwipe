@@ -12,6 +12,8 @@ const MusicTile = ({
     title,
     artist,
     albumCover,
+    backgroundColor,
+    animatedStyle
 }) => {
     const rotate = useSharedValue(0);
     const frontAnimations = useAnimatedStyle(()=>{
@@ -42,7 +44,7 @@ const MusicTile = ({
       };
 
     return (
-    <View style={styles.container}>
+      <Animated.View style={[styles.container]}>
       <View style={styles.cardContainer}>
       {/* <FlipCard 
         style={styles.card}
@@ -54,7 +56,7 @@ const MusicTile = ({
         clickable={false}
         onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
         > */}
-      <Animated.View style={[styles.card, styles.front, frontAnimations]}>
+      <Animated.View style={[styles.card, backgroundColor, animatedStyle, frontAnimations]}>
         <View style={[styles.face]}>
           <Image source={{uri:albumCover}} style={styles.image} />
           <Text style={styles.title}>{title}</Text>
@@ -77,7 +79,7 @@ const MusicTile = ({
       </Animated.View>
     {/* </FlipCard> */}
     </View>
-  </View>
+    </Animated.View>
 
     );
 
@@ -88,9 +90,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
   cardContainer: {
-      width: 300,
-      height: 400,
+      width: 330,
+      height: 600,
       position: 'relative',
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
       },
   card: {
       width: '100%',

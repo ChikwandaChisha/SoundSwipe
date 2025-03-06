@@ -69,7 +69,7 @@ const MusicTile = ({
           </TouchableOpacity>
         </View>
       </Animated.View>
-      <Animated.View style={[styles.card, styles.back, backAnimations, animatedStyle, backgroundColor]}>
+      <Animated.View style={[styles.card, styles.back, backAnimations]}>
         <View style={[styles.face]}>
           <Text>The Back</Text>
           <TouchableOpacity  style={styles.playButton} onPress={handleFlip}>

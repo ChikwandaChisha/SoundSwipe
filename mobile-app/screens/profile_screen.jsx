@@ -84,15 +84,37 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   // Render Apple Music Album
-  const renderAlbum = ({ item }) => (
-    <View style={styles.albumContainer}>
-      <Image source={{ uri: item.attributes.artwork.url.replace("{w}", "100").replace("{h}", "100") }} style={styles.albumArtwork} />
-      <View style={styles.albumInfo}>
-        <Text style={styles.albumTitle}>{item.attributes.name}</Text>
-        <Text style={styles.albumArtist}>{item.attributes.artistName}</Text>
+  const renderAlbum = ({ item }) => {
+    if (!item.attributes?.artwork?.url) {
+      // fallback or skip
+      return <Text>No artwork</Text>;
+    }
+
+    //console.log("Album item url:", item ? item.attributes.artwork.url : "no item");
+
+    const finalUrl = item.attributes.artwork.url
+      .replace("{w}", "100")
+      .replace("{h}", "100");
+
+    console.log("Album item finalUrl:", finalUrl);
+
+    return (
+      <View style={styles.albumContainer}>
+        <Image
+          source={{ uri: finalUrl }}
+          style={styles.albumArtwork}
+          onError={e => {
+            console.log("Image failed to load", e.nativeEvent.error);
+          }}
+        />
+        <View style={styles.albumInfo}>
+          <Text style={styles.albumTitle}>{item.attributes.name}</Text>
+          <Text style={styles.albumArtist}>{item.attributes.artistName}</Text>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
+
 
   const renderSession = ({ item }) => (
     <View style={styles.sessionContainer}>
@@ -238,6 +260,32 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  albumContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+  },
+  albumInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  albumTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  albumArtist: {
+    fontSize: 14,
+    color: '#666',
+  },
+  albumArtwork: {
+    width: 100,
+    height: 100,
+    borderRadius: 5,
+  },
+
 });
 
 export default ProfileScreen;

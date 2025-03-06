@@ -88,3 +88,22 @@ export async function storeAppleMusicToken(docId, musicUserToken) {
   }
 }
 
+export async function fetchLibrary() {
+  try {
+    const response = await fetch("https://api.music.apple.com/v1/me/library/albums", {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNYOEY3TFNQOUgifQ.eyJpc3MiOiJaSE02RDM0UTlXIiwiaWF0IjoxNzQxMjk1Mzc5LCJleHAiOjE3NTY3NjA5Nzl9.wKPH7XgkKFV1bj7Cd5S4Qbm9mqhi8p5ixsju8HMHGFvqMvuYjmTRH8oncO6iv3TDxjkPwPoLQMELMybh3SORqA`,
+        "Music-User-Token": "AhiU39Ubv3E0r2Bbdkaw+MVrFENQGH3pGhaKtpg4nBbp4IunVIRMzqFoR8qHNQwJgnMP1bpxkOlV3iseIutarZOxPJBNPUEZIRXS9nz3znyYwd4Y3X4HeSvqzWr39sElh3Uo7tYBjaDhOkz2w2s1iX19zzkrA6Uw8LejmIbRQg2Y6WZ5DtIBsdH4ALN74NQNh5O5IQRkHi4BMWWEMXVr/TBx+m61G8YAcDOwkGd45IVatxhCTw==",
+      },
+    });
+    const data = await response.json();
+    console.log("Apple Music Library:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching Apple Music library:", error);
+    return null;
+  }
+}
+
+
+

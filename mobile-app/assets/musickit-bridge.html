@@ -1,71 +1,42 @@
-<!-- musickit-bridge.html -->
 <!DOCTYPE html>
 <html>
 
-<!-- This assets file was generated entirely by ChatGPT o1 - wb -->
 <head>
   <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
 </head>
 
 <body>
   <script>
-    // Wait for MusicKit to load
-    document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('message', async (event) => {
+      console.log('[Bridge] Received event:', event.data);
 
-      // DEBUG Post a debug message to show we've loaded
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'bridge-init',
-        message: 'musickit-bridge.html is loaded & listening.'
-      }));
+      const data = JSON.parse(event.data);
 
-      // We'll listen for messages from the React Native side // Use window.addEventListener (not document.addEventListener!)
-      window.addEventListener('message', async (event) => {
-        // DEBUG ------------------------------
-        console.log('[Bridge] Received event.data:', event.data);
-        // Also post to RN logs
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          type: 'bridge-debug',
-          msg: 'Received from RN: ' + event.data
-        })); // --------------------------------
+      if (data.type === 'configure') {
+        console.log('[Bridge] Configuring MusicKit with devToken:', data.devToken);
+        try {
+          MusicKit.configure({
+            developerToken: data.devToken,
+            app: { name: 'SoundSwipe', build: '1.0.0' }
+          });
 
-        const data = JSON.parse(event.data);
-
-        if (data.type === 'configure') {
-          // configure dev token
-          console.log('[Bridge] Handling configure with devToken:', data.devToken);
-          try {
-            MusicKit.configure({
-              developerToken: data.devToken,
-              app: { name: 'SoundSwipeRN', build: '1.0.0' }
-            });
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'configured'
-            }));
-          } catch (configErr) {
-            console.error('[Bridge] configure error:', configErr);
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'error',
-              error: configErr.toString()
-            }));
-          }
-        } else if (data.type === 'authorize') {
-          console.log('[Bridge] Handling authorize()');
-          try {
-            const musicUserToken = await MusicKit.getInstance().authorize();
-            console.log('[Bridge] Successfully authorized. Token =', musicUserToken);
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'authorized',
-              userToken: musicUserToken
-            }));
-          } catch (err) {
-            console.error('[Bridge] authorize() error:', err);
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'error',
-              error: err.toString()
-            }));
-          }
+          console.log('[Bridge] MusicKit configured!');
+          window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'configured' }));
+        } catch (error) {
+          console.error('[Bridge] configure error:', error);
+          window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'error', error: error.toString() }));
         }
-      });
+      }
+
+      if (data.type === 'authorize') {
+        console.log('[Bridge] Skipping authorization. Sending hardcoded MUT.');
+        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'authorized', userToken: "AhiU39Ubv3E0r2Bbdkaw+MVrFENQGH3pGhaKtpg4nBbp4IunVIRMzqFoR8qHNQwJgnMP1bpxkOlV3iseIutarZOxPJBNPUEZIRXS9nz3znyYwd4Y3X4HeSvqzWr39sElh3Uo7tYBjaDhOkz2w2s1iX19zzkrA6Uw8LejmIbRQg2Y6WZ5DtIBsdH4ALN74NQNh5O5IQRkHi4BMWWEMXVr/TBx+m61G8YAcDOwkGd45IVatxhCTw==" }));
+      }
+    });
+
+    // Notify WebView that the bridge has loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'bridge-ready' }));
     });
   </script>
 </body>

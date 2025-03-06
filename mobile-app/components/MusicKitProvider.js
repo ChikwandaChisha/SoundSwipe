@@ -4,6 +4,8 @@ import { WebView } from 'react-native-webview';
 import { View } from 'react-native';
 import { getAppleMusicDevToken, storeAppleMusicToken } from '../services/api'; 
 
+const HARDCODED_MUSIC_USER_TOKEN = "AhiU39Ubv3E0r2Bbdkaw+MVrFENQGH3pGhaKtpg4nBbp4IunVIRMzqFoR8qHNQwJgnMP1bpxkOlV3iseIutarZOxPJBNPUEZIRXS9nz3znyYwd4Y3X4HeSvqzWr39sElh3Uo7tYBjaDhOkz2w2s1iX19zzkrA6Uw8LejmIbRQg2Y6WZ5DtIBsdH4ALN74NQNh5O5IQRkHi4BMWWEMXVr/TBx+m61G8YAcDOwkGd45IVatxhCTw==";  // Replace this with your actual MUT
+
 // export a context so any screen can call "authorize"
 export const MusicKitContext = createContext(null);
 
@@ -13,6 +15,7 @@ export default function MusicKitProvider({ children }) {
 
   // store the userToken if user authorizes
   const [appleMusicUserToken, setAppleMusicUserToken] = useState(null);
+  const [bridgeReady, setBridgeReady] = useState(false);
 
   useEffect(() => {
     console.log("MusicKitProvider mounted. Initiating MusicKit in WebView..."); // debug
@@ -20,6 +23,11 @@ export default function MusicKitProvider({ children }) {
   }, []);
 
   async function initMusicKitInWebView() {
+     if (!bridgeReady) {
+      console.warn('WebView bridge not ready. Waiting...');
+      return;
+    }
+
     console.log("initMusicKitInWebView called. Fetching Apple dev token...");
     try {
       const { token } = await getAppleMusicDevToken(); 
@@ -40,13 +48,8 @@ export default function MusicKitProvider({ children }) {
 
   // expose an authorize function to screens
   async function authorizeMusicKit() {
-    console.log("authorizeMusicKit called. Telling WebView to authorize user...");
-    try {
-      // This sends a message that the WebView will interpret to call MusicKit JS
-      webviewRef.current?.postMessage(JSON.stringify({ type: 'authorize' }));
-    } catch (err) {
-      console.error("Error in authorizeMusicKit:", err);
-    }
+    console.log("Skipping user authorization. Using hardcoded MUT.");
+    setAppleMusicUserToken(HARDCODED_MUSIC_USER_TOKEN);
   }
 
   // messages coming BACK from WebView
@@ -55,17 +58,28 @@ export default function MusicKitProvider({ children }) {
     try {
       const data = JSON.parse(event.nativeEvent.data);
       console.log("Parsed from WebView:", data);
+
+      if (data.type === 'bridge-ready') {
+        console.log('WebView bridge is ready.');
+        setBridgeReady(true);
+        initMusicKitInWebView();
+      }
       
       if (data.type === 'configured') {
         console.log('MusicKit is now configured inside WebView');
         setIsConfigured(true);
-      } else if (data.type === 'authorized') {
-        console.log('Got Apple Music user token:', data.userToken);
+      } 
+      
+      if (data.type === 'authorized') {
+        console.log('User authorized. Got MUT:', data.userToken);
         setAppleMusicUserToken(data.userToken);
         storeAppleMusicToken(userDocId, data.userToken); // to firestore
-      } else if (data.type === 'error') {
+      } 
+      
+      if (data.type === 'error') {
         console.error('MusicKit error in WebView:', data.error);
       }
+
     } catch (err) {
       console.error('Error parsing WebView message:', err);
     }

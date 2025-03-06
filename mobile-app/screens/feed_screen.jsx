@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView, Dimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolateColor, runOnJS } from 'react-native-reanimated';
 import MusicTile from '../components/music_tile';
 import PlaylistTile from '../components/playlist_tile';
 
@@ -17,14 +17,16 @@ export function FeedScreen() {
   
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
+  const rotate = useSharedValue(0);
   const opacity = useSharedValue(1);
-  const directionLocked = useSharedValue(null); // "horizontal" or "vertical"
+  const directionLocked = useSharedValue(null);
 
   const handleNextSong = () => {
     if (currentIndex < songs.length - 1) {
       opacity.value = 0;
       translateX.value = 0;
       translateY.value = 0;
+      rotate.value = 0;
       setCurrentIndex((prev) => prev + 1);
       opacity.value = withTiming(1, { duration: 800 });
     }
@@ -38,7 +40,6 @@ export function FeedScreen() {
 
   const swipeGesture = Gesture.Pan()
     .onUpdate((event) => {
-      // determine movement direction on first significant move
       if (directionLocked.value === null) {
         if (Math.abs(event.translationX) > 30) {
           directionLocked.value = "horizontal"; 
@@ -49,6 +50,7 @@ export function FeedScreen() {
 
       if (directionLocked.value === "horizontal") {
         translateX.value = event.translationX;
+        rotate.value = event.translationX / 10;
       } else if (directionLocked.value === "vertical" && event.translationY < 0) { 
         translateY.value = event.translationY;
       }
@@ -66,12 +68,25 @@ export function FeedScreen() {
 
       translateX.value = withSpring(0);
       translateY.value = withSpring(0);
+      rotate.value = withSpring(0);
       directionLocked.value = null;
     });
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }, { translateX: translateX.value }],
+    transform: [
+      { translateY: translateY.value },
+      { translateX: translateX.value },
+      { rotate: `${rotate.value}deg` }
+    ],
     opacity: opacity.value,
+  }));
+
+  const backgroundColor = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      translateX.value, 
+      [-200, 0, 200], 
+      ['red', '#EA9A4A', 'green']
+    ),
   }));
 
   return (
@@ -81,13 +96,13 @@ export function FeedScreen() {
           <PlaylistTile onClose={() => setShowPlaylist(false)} />
         ) : (
           <GestureDetector gesture={swipeGesture}>
-            <Animated.View style={[styles.musicTile, animatedStyle]}>
-              <MusicTile
-                title={songs[currentIndex].title}
-                artist={songs[currentIndex].artist}
-                albumCover={songs[currentIndex].albumCover}
-              />
-            </Animated.View>
+            <MusicTile
+              title={songs[currentIndex].title}
+              artist={songs[currentIndex].artist}
+              albumCover={songs[currentIndex].albumCover}
+              animatedStyle={animatedStyle}
+              backgroundColor={backgroundColor}
+            />
           </GestureDetector>
         )}
       </View>
@@ -98,7 +113,7 @@ export function FeedScreen() {
 const styles = {
   safeArea: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#B45225',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -107,7 +122,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
 };
 
 export default FeedScreen;

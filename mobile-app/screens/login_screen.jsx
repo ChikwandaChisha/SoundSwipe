@@ -229,7 +229,8 @@ loginTitle: {
     width: 40,  
     height: 40,
     resizeMode: 'contain',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 15
 
 },
 icontext:{

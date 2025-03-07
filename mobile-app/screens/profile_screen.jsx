@@ -115,7 +115,6 @@ const ProfileScreen = ({ navigation, route }) => {
     );
   };
 
-
   const renderSession = ({ item }) => (
     <View style={styles.sessionContainer}>
       <Image source={{ uri: item.attributes.artwork.url.replace('{w}', '50').replace('{h}', '50') }} style={styles.artwork} />

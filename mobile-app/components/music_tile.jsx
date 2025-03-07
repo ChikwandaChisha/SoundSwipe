@@ -131,8 +131,8 @@ const MusicTile = ({
         <Animated.View style={[styles.card, styles.back, backAnimations]}>
           <View style={[styles.face]}>
             <Text style={styles.backText}>The Back</Text>
-            <TouchableOpacity style={styles.playButton} onPress={handleFlip}>
-              <Text style={styles.playTextBack}>…</Text>
+            <TouchableOpacity style={styles.flipButton} onPress={handleFlip}>
+              <Text style={styles.flipText}>…</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -210,10 +210,11 @@ const styles = StyleSheet.create({
     color: '#1C3546',
   },
   flipButton: {
+    position: 'absolute',
     borderRadius: 50,
     width: 50,
     height: 50,
-    marginBottom: 0,
+    bottom: 10,
     marginTop: 0,
     justifyContent: 'center',
     alignItems: 'center',

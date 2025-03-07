@@ -8,10 +8,12 @@ import PlaylistTile from '../components/playlist_tile';
 
 const APPLE_MUSIC_DEV_TOKEN = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNYOEY3TFNQOUgifQ.eyJpc3MiOiJaSE02RDM0UTlXIiwiaWF0IjoxNzQxMjk1Mzc5LCJleHAiOjE3NTY3NjA5Nzl9.wKPH7XgkKFV1bj7Cd5S4Qbm9mqhi8p5ixsju8HMHGFvqMvuYjmTRH8oncO6iv3TDxjkPwPoLQMELMybh3SORqA";
 import { SAMPLE_SONGS } from '../assets/sampleSongs';
+import { SAMPLE_PLAYLISTS } from '../assets/samplePlaylists'
 
 export function FeedScreen({ navigation }) {
   // Use sample of 30 songs (top charts from 2024)
   const [songs, setSongs] = useState(SAMPLE_SONGS);
+  const [playlists, setPlaylists] = useState(SAMPLE_PLAYLISTS);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlaylist, setShowPlaylist] = useState(false);
@@ -101,7 +103,7 @@ export function FeedScreen({ navigation }) {
         runOnJS(handleNextSong)();
       } else if (directionLocked.value === "horizontal") {
         if (event.translationX > 150) {
-          runOnJS(handleNextSong)(); // change back to playlist when ready (next song for now)
+          runOnJS(handleShowPlaylist)(); // change back to playlist when ready (next song for now)
         } else if (event.translationX < -150) {
           runOnJS(handleNextSong)();
         }
@@ -130,6 +132,12 @@ export function FeedScreen({ navigation }) {
     ),
   }));
 
+  const addSongs = (selectedPlaylists) => {
+    //add song to playlists through API here
+    console.log(`Added Song to ${selectedPlaylists}`);
+    return(selectedPlaylists);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
@@ -138,7 +146,14 @@ export function FeedScreen({ navigation }) {
 
       <View style={styles.container}>
         {showPlaylist ? (
-          <PlaylistTile onClose={() => setShowPlaylist(false)} />
+          <PlaylistTile 
+          onClose={() => setShowPlaylist(false)} 
+          cover={currentSong.artworkUrl}
+          title={currentSong.foundName}
+          artist={currentSong.foundArtist}
+          playlists={playlists}
+          addSong={() => setShowPlaylist(false)}
+          />
         ) : (
           <GestureDetector gesture={swipeGesture}>
             <MusicTile

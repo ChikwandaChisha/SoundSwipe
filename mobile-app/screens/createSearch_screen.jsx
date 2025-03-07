@@ -6,22 +6,24 @@ export function CreateSearchScreen({ navigation }) {
   const [genre, setGenre] = useState("");
   const [instruments, setInstruments] = useState("");
   const [similarSongs, setSimilarSongs] = useState("");
+  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
 
   const handleCreateSearch = () => {
-    // connect api and send inputs to backend
     console.log({ name, genre, instruments, similarSongs });
     navigation.replace("FeedScreen");
   };
 
   const goBack = () => {
     navigation.replace("LoginScreen");
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>SOUNDSWIPE</Text>
-      <Text style={styles.subtitle}>PERSONALIZE YOUR MUSIC SEARCH</Text>
-      <Text style={styles.infoText}>
+      <Text style={[styles.title, isKeyboardActive && styles.shrinkTitle]}>SOUNDSWIPE</Text>
+      <Text style={[styles.subtitle, isKeyboardActive && styles.shrinkSubtitle]}>
+        PERSONALIZE YOUR MUSIC SEARCH
+      </Text>
+      <Text style={[styles.infoText, isKeyboardActive && styles.shrinkInfoText]}>
         This information will be used with an AI to help improve your search algorithm.
       </Text>
 
@@ -31,6 +33,8 @@ export function CreateSearchScreen({ navigation }) {
         placeholderTextColor="#888" 
         value={name} 
         onChangeText={setName} 
+        onFocus={() => setIsKeyboardActive(true)}
+        onBlur={() => setIsKeyboardActive(false)}
       />
       <TextInput 
         style={styles.input} 
@@ -38,6 +42,8 @@ export function CreateSearchScreen({ navigation }) {
         placeholderTextColor="#888" 
         value={genre} 
         onChangeText={setGenre} 
+        onFocus={() => setIsKeyboardActive(true)}
+        onBlur={() => setIsKeyboardActive(false)}
       />
       <TextInput 
         style={styles.input} 
@@ -45,6 +51,8 @@ export function CreateSearchScreen({ navigation }) {
         placeholderTextColor="#888" 
         value={instruments} 
         onChangeText={setInstruments} 
+        onFocus={() => setIsKeyboardActive(true)}
+        onBlur={() => setIsKeyboardActive(false)}
       />
       <TextInput 
         style={styles.input} 
@@ -52,6 +60,8 @@ export function CreateSearchScreen({ navigation }) {
         placeholderTextColor="#888" 
         value={similarSongs} 
         onChangeText={setSimilarSongs} 
+        onFocus={() => setIsKeyboardActive(true)}
+        onBlur={() => setIsKeyboardActive(false)}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleCreateSearch}>
@@ -74,29 +84,41 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 30,
-    fontWeight: 700,
+    fontSize: 45,
+    fontWeight: "700",
     color: "#1C3546",
     marginBottom: 10,
     textAlign: "center",
     fontFamily: "Josefin Sans",
-    marginTop: 90
+    marginTop: 90,
+  },
+  shrinkTitle: {
+    marginTop: 50,
+    fontSize: 40,
   },
   subtitle: {
     fontSize: 35,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#1C3546",
     marginBottom: 30,
     marginTop: 20,
     textAlign: "center",
     fontFamily: "Josefin Sans",
   },
+  shrinkSubtitle: {
+    fontSize: 30,
+    marginBottom: 20,
+  },
   infoText: {
     fontSize: 14,
-    color: "#1C35461C3546",
+    color: "#1C3546",
     textAlign: "center",
     marginBottom: 50,
     fontFamily: "Josefin Sans",
+  },
+  shrinkInfoText: {
+    marginBottom: 20,
+    fontSize: 12,
   },
   input: {
     width: "100%",
@@ -126,7 +148,7 @@ const styles = StyleSheet.create({
   backButton: {
     padding: 10,
     marginTop: 30,
-    alignSelf: 'start',
+    alignSelf: "start",
   },
   backButtonText: {
     fontSize: 16,

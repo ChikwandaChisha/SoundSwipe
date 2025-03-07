@@ -70,6 +70,7 @@ const MusicTile = ({
           );
           newSound = createdSound;
           setSound(createdSound);
+          setIsPlaying(true);
         } catch (err) {
           console.warn('Error creating audio', err);
         }

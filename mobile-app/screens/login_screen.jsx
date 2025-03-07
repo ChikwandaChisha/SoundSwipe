@@ -98,13 +98,13 @@ export function LoginScreen({ navigation }) {
                     <Text style={styles.subtitle}>Getter better recommendations and build new playlists with the songs you like.</Text>
                 </View>
 
-                <View style={styles.statusBox}>
+                {/* <View style={styles.statusBox}>
                     {loading ? <ActivityIndicator /> : <Text style={styles.apiMessage}>{message}</Text>}
-                </View>
+                </View> */}
 
                 <View style={styles.dragContainer} {...panResponder.panHandlers}>
                     <Image source={swipeIcon} style={styles.swipeIcon} />
-                    <Text style={styles.icontext}>Swipe up to login to your Apple Music Account</Text>
+                    {/* <Text style={styles.icontext}>Swipe up to login to your Apple Music Account</Text> */}
                 </View>
             
             </Animated.View>
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     zIndex: 3, 
+    padding: 40,
   },
   landingScreenText: {
     backgroundColor: '#C9E7E0',
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 45,
     color: '#1C3546',
-    marginTop: 70,
+    marginTop: 100,
     marginBottom: 50,
     fontfamily: "Josefin Sans",
     fontWeight: 700,
@@ -184,8 +185,8 @@ loginTitle: {
     fontWeight: 700,
 },
   subtitle: {
-    fontSize: 18,
-    color: '#1C3546',
+    fontSize: 20,
+    color: '#305975',
     marginBottom: 30,
     textAlign: 'center',
     fontWeight: 500,

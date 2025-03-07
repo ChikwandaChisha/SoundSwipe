@@ -132,10 +132,9 @@ export function FeedScreen({ navigation }) {
     ),
   }));
 
-  const addSongs = (selectedPlaylists) => {
-    //add song to playlists through API here
-    console.log(`Added Song to ${selectedPlaylists}`);
-    return(selectedPlaylists);
+  const addSongs = () => {
+    setShowPlaylist(false);
+    handleNextSong();
   };
 
   return (
@@ -152,7 +151,7 @@ export function FeedScreen({ navigation }) {
           title={currentSong.foundName}
           artist={currentSong.foundArtist}
           playlists={playlists}
-          addSong={() => setShowPlaylist(false)}
+          addSong={addSongs}
           />
         ) : (
           <GestureDetector gesture={swipeGesture}>

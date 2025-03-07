@@ -131,7 +131,7 @@ const ProfileScreen = ({ navigation, route }) => {
       <Text style={styles.title}>SOUNDSWIPE</Text>
       <View style={styles.profileSection}>
         <View style={styles.profilePic} />
-        <Text style={styles.username}>USERNAME</Text>
+        <Text style={styles.username}>@username</Text>
       </View>
 
       {/* Apple Music Connection Status */}
@@ -173,14 +173,15 @@ const ProfileScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EA9A4A',
+    backgroundColor: '#C9E7E0',
     alignItems: 'center',
     paddingTop: 50,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 20
+    marginTop: 20, 
+    color: '#1C3546',
   },
   profileSection: {
     flexDirection: 'row',
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#1C3546',
   },
   /* Apple Music Styles */
   appleMusicContainer: {
@@ -205,10 +207,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   appleMusicButton: {
-    backgroundColor: '#D97742',
+    backgroundColor: '#1C3546',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 20,
+    borderRadius: 30,
     marginTop: 10,
   },
   appleMusicButtonText: {
@@ -218,13 +220,14 @@ const styles = StyleSheet.create({
   appleMusicStatus: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#1C3546',
     marginTop: 10,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginVertical: 10,
+    color: '#1C3546',
   },
   sessionContainer: {
     flexDirection: 'row',
@@ -238,7 +241,7 @@ const styles = StyleSheet.create({
   artwork: {
     width: 40,
     height: 40,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   sessionTitle: {
     flex: 1,
@@ -248,9 +251,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   searchButton: {
-    backgroundColor: '#D97742',
+    backgroundColor: '#1C3546',
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
     borderRadius: 25,
     marginTop: 20,
     marginBottom: 40

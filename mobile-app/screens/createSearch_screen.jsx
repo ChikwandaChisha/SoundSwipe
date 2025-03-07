@@ -68,7 +68,7 @@ export function CreateSearchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EA9A4A",
+    backgroundColor: "#C9E7E0",
     alignItems: "center",
     justifyContent: "start",
     paddingHorizontal: 20,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 700,
-    color: "#000",
+    color: "#1C3546",
     marginBottom: 10,
     textAlign: "center",
     fontFamily: "Josefin Sans",
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 35,
     fontWeight: 500,
-    color: "#000",
+    color: "#1C3546",
     marginBottom: 30,
     marginTop: 20,
     textAlign: "center",
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 14,
-    color: "#333",
+    color: "#1C35461C3546",
     textAlign: "center",
     marginBottom: 50,
     fontFamily: "Josefin Sans",
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: "#fff",
-    borderRadius: 30,
+    borderRadius: 25,
     paddingHorizontal: 15,
     fontSize: 16,
     marginBottom: 35,
@@ -111,11 +111,12 @@ const styles = StyleSheet.create({
   button: {
     width: "70%",
     height: 100,
-    backgroundColor: "#FF8000",
+    backgroundColor: "#1C3546",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
     marginTop: 25,
+    padding: 20,
   },
   buttonText: {
     fontSize: 18,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 16,
-    color: "#000",
+    color: "#1C3546",
     fontWeight: "bold",
   },
 });

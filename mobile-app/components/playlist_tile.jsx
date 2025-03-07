@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable, Icon } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import { CheckCircleFilled } from '@ant-design/icons';
+import { ScrollView } from 'react-native-gesture-handler';
 // import Animated, {
 //   interpolate,
 //   useAnimatedStyle,
@@ -39,23 +40,24 @@ const PlaylistTile = ({
     addSong(finalPlaylists);
   }
   
-  const PlaylistItem = ({playlist, cover, togglePlaylist}) => {
-    const checked = Boolean(addedPlaylists[playlist]);
+  const PlaylistItem = ({name, cover, togglePlaylist}) => {
+    const checked = Boolean(addedPlaylists[name]);
     const toggleCheckbox = () => {
-      togglePlaylist(playlist);
+      togglePlaylist(name);
     }
+    console.log(cover);
     
     return (
       <View style={styles.playlistContainer}>
         <Image style={styles.playlistCover} source={{uri:cover}} />
-        <Text style={styles.playlistTitle} numberOfLines={1} ellipsizeMode="tail">{playlist}</Text>
+        <Text style={styles.playlistTitle} numberOfLines={1} ellipsizeMode="tail">{name}</Text>
         <Pressable >
           <CheckBox
           style={styles.playlistAdd}
           checked={checked}
           checkedIcon="check-circle"
           uncheckedIcon="plus-circle"
-          uncheckedColor='#6d7570'
+          uncheckedColor='#1C3546'
           checkedColor='#33de60'
           onPress={toggleCheckbox}
           size={23}
@@ -71,24 +73,25 @@ const PlaylistTile = ({
     <View style={styles.container}>
       <View style={styles.card}>
         <View style={styles.currentSong}>
-          <Image source={{uri:cover}} style={styles.songCover} />
+          
+          <Image source={{ uri:cover }} style={styles.songCover} />
           <View style={styles.songText}>
-            <Text style={styles.songTitle}>{title}</Text>
-            <Text style={styles.songArtist}>{artist}</Text>
+            <Text style={styles.songTitle} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
+            <Text style={styles.songArtist} numberOfLines={1} ellipsizeMode="tail">{artist}</Text>
            </View>
         </View>
         <View style={styles.addSong}>
           <Text style={styles.title}>Select Playlists</Text>
-          <View style={styles.playlistList}>
+          <ScrollView style={styles.playlistList}>
           {playlists.map((playlist, index)=> (
             <PlaylistItem
-            key={index}
-            cover={"https://images.unsplash.com/photo-1740738174801-12a109f9acd3?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D"}
-            playlist={playlist}
+            key={playlist.foundId}
+            cover={playlist.artworkUrl}
+            name={playlist.foundName}
             togglePlaylist={togglePlaylist}
             />
           ))}
-        </View>
+          </ScrollView>
         </View>
         <TouchableOpacity style={styles.addButton} onPress={onAddSong}>
           <Text style={styles.buttonText}>Add Song</Text>
@@ -107,13 +110,13 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: 300,
-    height: 500,
+    width: 330,
+    height: 600,
     borderRadius: 20,
-    backgroundColor: '#d68e47',
+    backgroundColor: '#fff',
   },
   currentSong: {
-    width: 225,
+    width: 260,
     height: 100,
     borderRadius: 10,
     backgroundColor: 'white',
@@ -121,7 +124,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    columnGap: 15,
+    columnGap: 10,
+    boxShadow: '-4px 6px 25px -7px #1C3546',
   },
   songCover: {
     width: 60,
@@ -131,29 +135,35 @@ const styles = StyleSheet.create({
   songText: {
     fontSize: 10,
     rowGap: 3,
+    width: '70%',
   },
   songTitle: {
     fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1C3546',
   },
   songArtist: {
     fontSize: 15,
+    color: '#1C3546',
   },
   addSong: {
     width: 250,
-    height: 300,
+    height: 375,
     borderRadius: 10,
     backgroundColor: 'white',
-    padding: 25,
+    padding: 10,
     alignItems: 'center',
-    rowGap: 20,
+    rowGap: 15,
   },
   title: {
     fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1C3546',
   },
   playlistList: {
     width: 250,
     rowGap: 10,
-    overflowY: 'scroll'
+    // backgroundColor: 'red',
   },
   playlistContainer: {
     // width: 220,
@@ -162,9 +172,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     columnGap: 10,
+    marginVertical: 8,
     padding: 5,
     paddingRight: 0,
-    backgroundColor: 'lightPink',
     borderRadius: 5,
   },
   playlistCover: {
@@ -176,11 +186,17 @@ const styles = StyleSheet.create({
     width: 115,
     textAlign: 'left',
     fontSize: 18,
+    color: '#1C3546'
   },
   addButton: {
-    backgroundColor: '#f7c697',
+    // backgroundColor: '#f7c697',
     padding: 8,
     borderRadius: 3,
+    boxShadow: '-4px 6px 25px -6px #1C3546',
+  },
+  buttonText: {
+    fontSize: 15,
+    color: '#1C3546'
   }
 
 });

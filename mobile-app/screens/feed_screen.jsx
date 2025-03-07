@@ -126,7 +126,7 @@ export function FeedScreen({ navigation }) {
     backgroundColor: interpolateColor(
       translateX.value, 
       [-200, 0, 200], 
-      ['#F5C6C6', '#fff', '#C6F5C6']
+      ['#ff7070', '#fff', '#87ffa3']
     ),
   }));
 

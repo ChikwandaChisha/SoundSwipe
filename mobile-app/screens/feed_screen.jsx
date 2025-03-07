@@ -1,25 +1,62 @@
-import React, { useState } from 'react';
+// screens/feed_screen.jsx
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolateColor, runOnJS } from 'react-native-reanimated';
 import MusicTile from '../components/music_tile';
 import PlaylistTile from '../components/playlist_tile';
 
+const APPLE_MUSIC_DEV_TOKEN = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNYOEY3TFNQOUgifQ.eyJpc3MiOiJaSE02RDM0UTlXIiwiaWF0IjoxNzQxMjk1Mzc5LCJleHAiOjE3NTY3NjA5Nzl9.wKPH7XgkKFV1bj7Cd5S4Qbm9mqhi8p5ixsju8HMHGFvqMvuYjmTRH8oncO6iv3TDxjkPwPoLQMELMybh3SORqA";
+import { SAMPLE_SONGS } from '../assets/sampleSongs';
+
 export function FeedScreen({ navigation }) {
-  const songs = [
-    { id: '1', title: "PassionFruit", artist: "Drake", albumCover: "https://i1.sndcdn.com/artworks-CCbZ4mG3Juom-0-t500x500.jpg" },
-    { id: '2', title: "Like a Rolling Stone", artist: "Bob Dylan", albumCover: "https://cdn-images.dzcdn.net/images/cover/96193f14db0501c035bd43ab93960317/500x500-000000-80-0-0.jpg" },
-    { id: '3', title: "Bohemian Rhapsody", artist: "Queen", albumCover: "https://dbzbooks.com/cdn/shop/files/81f5a2e2622469a37d468121f86e69f51ef91178560295055e205217a65160d5.jpg?v=1723056046&width=493" },
-  ];
+  // Use sample of 30 songs (top charts from 2024)
+  const [songs, setSongs] = useState(SAMPLE_SONGS);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlaylist, setShowPlaylist] = useState(false);
   
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const currentSong = songs[currentIndex];
+
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotate = useSharedValue(0);
   const opacity = useSharedValue(1);
   const directionLocked = useSharedValue(null);
+  
+  // when user changes songs, fetch from Apple Music's catalog
+  useEffect(() => {
+    const fetchPreviewUrl = async () => {
+      if (!currentSong || !currentSong.foundId) {
+        setPreviewUrl(null);
+        return;
+      }
+      try {
+        const resp = await fetch(
+          `https://api.music.apple.com/v1/catalog/us/songs/${currentSong.foundId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${APPLE_MUSIC_DEV_TOKEN}`
+            }
+          }
+        );
+        const data = await resp.json();
+        const previewItems = data?.data?.[0]?.attributes?.previews;
+        if (previewItems && previewItems.length > 0) {
+          setPreviewUrl(previewItems[0].url);
+        } else {
+          // no preview found
+          setPreviewUrl(null);
+        }
+      } catch (err) {
+        console.error("Error fetching Apple preview:", err);
+        setPreviewUrl(null);
+      }
+    };
+
+    fetchPreviewUrl();
+  }, [currentSong]);
 
   const handleNextSong = () => {
     if (currentIndex < songs.length - 1) {
@@ -64,7 +101,7 @@ export function FeedScreen({ navigation }) {
         runOnJS(handleNextSong)();
       } else if (directionLocked.value === "horizontal") {
         if (event.translationX > 150) {
-          runOnJS(handleShowPlaylist)();
+          runOnJS(handleNextSong)(); // change back to playlist when ready (next song for now)
         } else if (event.translationX < -150) {
           runOnJS(handleNextSong)();
         }
@@ -105,9 +142,11 @@ export function FeedScreen({ navigation }) {
         ) : (
           <GestureDetector gesture={swipeGesture}>
             <MusicTile
-              title={songs[currentIndex].title}
-              artist={songs[currentIndex].artist}
-              albumCover={songs[currentIndex].albumCover}
+              title={currentSong.foundName}
+              artist={currentSong.foundArtist}
+              albumCover={currentSong.artworkUrl}
+              songId={currentSong.foundId}
+              trackUrl={previewUrl}
               animatedStyle={animatedStyle}
               backgroundColor={backgroundColor}
             />

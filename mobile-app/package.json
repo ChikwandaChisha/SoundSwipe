@@ -35,7 +35,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "@expo/config-plugins": "~9.0.0",
-    "expo-av": "~15.0.2"
+    "expo-av": "~15.0.2",
+    "react-native-svg": "15.8.0"
   },
   "resolutions": {
     "@types/react": "^17"

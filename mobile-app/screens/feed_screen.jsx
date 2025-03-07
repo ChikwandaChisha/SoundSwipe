@@ -126,7 +126,7 @@ export function FeedScreen({ navigation }) {
     backgroundColor: interpolateColor(
       translateX.value, 
       [-200, 0, 200], 
-      ['red', '#EA9A4A', 'green']
+      ['#F5C6C6', '#fff', '#C6F5C6']
     ),
   }));
 
@@ -160,7 +160,7 @@ export function FeedScreen({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#B45225',
+    backgroundColor: '#C9E7E0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   backButtonText: {
-    color: '#000000',
+    color: '#1C3546',
     fontSize: 16,
     fontWeight: 'bold',
   },

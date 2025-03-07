@@ -1,3 +1,4 @@
+// components/song_card.jsx
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, SafeAreaView, StatusBar } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';

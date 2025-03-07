@@ -77,27 +77,6 @@ export function LoginScreen({ navigation }) {
           console.log("Navigating to Profile Screen with docId:", result.docId);
           navigation.replace("ProfileScreen", { docId: result.docId }); // need to integrate docID - profile screen
           }
-          
-          // MOVING APPLE MUSIC AUTH LOGIC TO PROFILE SCREEN
-
-          // // now do some sort of navigation / apple music check 
-          // const docId = result.docId;
-          // const userDoc = await getUserDocById(docId);
-
-          // console.log("Beginning check for Apple Music token......");
-          // if (!userDoc.appleMusic?.userToken) {
-          //   // no Apple Music token → prompt them to authorize
-          //   console.log("\nUser does not have Apple Music token\n");
-          //   await authorizeMusicKit();
-          //   if (appleMusicUserToken) {
-          //     // store it in Firestore
-          //     console.log("Storing User Apple Music token in Firestore\n");
-          //     await storeAppleMusicToken(docId, appleMusicUserToken);
-          //   }
-          // } else {
-          //   // they already have a token, so skip
-          //   console.log("User already has Apple Music token");
-          // }
 
         } else {
           setMessage(`Error: ${result.error}`);
@@ -122,10 +101,6 @@ export function LoginScreen({ navigation }) {
                 <View style={styles.statusBox}>
                     {loading ? <ActivityIndicator /> : <Text style={styles.apiMessage}>{message}</Text>}
                 </View>
-
-                <Image source={notesGif} style={styles.notesGif} cachePolicy="none" contentFit="cover" />
-                <Image source={snoopyGif} style={styles.gif} cachePolicy="none" contentFit="cover" />
-
 
                 <View style={styles.dragContainer} {...panResponder.panHandlers}>
                     <Image source={swipeIcon} style={styles.swipeIcon} />
@@ -175,19 +150,19 @@ const styles = StyleSheet.create({
 
   landingScreen: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#FF8000',
+    backgroundColor: '#C9E7E0',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     zIndex: 3, 
   },
   landingScreenText: {
-    backgroundColor: '#FF8000',
+    backgroundColor: '#C9E7E0',
     alignItems: 'center',
     justifyContent: 'start',
   },
   title: {
     fontSize: 45,
-    color: '#000',
+    color: '#1C3546',
     marginTop: 70,
     marginBottom: 50,
     fontfamily: "Josefin Sans",
@@ -195,14 +170,14 @@ const styles = StyleSheet.create({
 },
 shrinkTitle: {
     fontSize: 45,
-    color: '#000',
+    color: '#1C3546',
     marginTop: 70,
     fontfamily: "Josefin Sans",
     fontWeight: 700,
 },
 loginTitle: {
     fontSize: 45,
-    color: '#000',
+    color: '#1C3546',
     marginTop: 120,
     marginBottom: 40,
     fontfamily: "Josefin Sans",
@@ -210,7 +185,7 @@ loginTitle: {
 },
   subtitle: {
     fontSize: 18,
-    color: '#000',
+    color: '#1C3546',
     marginBottom: 30,
     textAlign: 'center',
     fontWeight: 500,
@@ -220,7 +195,7 @@ loginTitle: {
   },
   loginSubtitle: {
     fontSize: 18,
-    color: '#000',
+    color: '#1C3546',
     marginBottom: 40,
     marginTop: 30,
     textAlign: 'center',
@@ -232,7 +207,7 @@ loginTitle: {
   
   loginSubtitle2: {
     fontSize: 18,
-    color: '#333',
+    color: '#1C3546',
     marginBottom: 0,
     textAlign: 'center',
     fontWeight: 300,
@@ -264,24 +239,24 @@ icontext:{
     fontfamily: "Josefin Sans",
     alignSelf: 'center'
 },
-  gif: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    zIndex: 4,
-    marginBottom: 120 
-    }, 
-   notesGif: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    zIndex: 3,
-    marginBottom: -20
-    }, 
+  // gif: {
+  //   width: 200,
+  //   height: 200,
+  //   resizeMode: 'contain',
+  //   zIndex: 4,
+  //   marginBottom: 120 
+  //   }, 
+  //  notesGif: {
+  //   width: 200,
+  //   height: 200,
+  //   resizeMode: 'contain',
+  //   zIndex: 3,
+  //   marginBottom: -20
+  //   }, 
 
   loginScreen: {
     flex: 1,
-    backgroundColor: '#EA9A4A',
+    backgroundColor: '#C9E7E0',
     alignItems: 'center',
     justifyContent: 'flex-start',
     zIndex: 2, 
@@ -292,7 +267,7 @@ icontext:{
     height: 60,
     backgroundColor: '#fff',
     color: 'black',
-    borderRadius: 10,
+    borderRadius: 20,
     paddingHorizontal: 15,
     fontSize: 16,
     marginBottom: 40,
@@ -303,7 +278,7 @@ icontext:{
     height: 60,
     backgroundColor: '#fff',
     color: '#000000',
-    borderRadius: 10,
+    borderRadius: 20,
     paddingHorizontal: 15,
     fontSize: 16,
     marginBottom: 15,
@@ -311,14 +286,14 @@ icontext:{
   button: {
     width: '70%',
     height: 90,
-    backgroundColor: '#FF8000',
+    backgroundColor: '#1C3546',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
     marginTop: 70,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 22,
     color: '#fff',
     fontWeight: 'bold',
   },

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Pressable } from 'react-native';
 import FlipCard from 'react-native-flip-card'; 
 import { Audio } from 'expo-av';
+import AudioWave from './Waveform';
 
 import Animated, {
   interpolate,
@@ -10,6 +11,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+
 
 const MusicTile = ({
     title,
@@ -115,9 +117,12 @@ const MusicTile = ({
               </Text>
             </Pressable>
 
+            {/* Minimal wave visualization */}
+            <AudioWave isPlaying={isPlaying} color={'#1C3546'} />
+
             {/* Flip button */}
-            <TouchableOpacity style={styles.playButton} onPress={handleFlip}>
-              <Text style={styles.playText}>…</Text>
+            <TouchableOpacity style={styles.flipButton} onPress={handleFlip}>
+              <Text style={styles.flipText}>…</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   back: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D0D7E1',
   },
   backText: {
     fontSize: 22,
@@ -175,36 +180,55 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
+    color: '#1C3546',
   },
   artist: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#555',
-    marginBottom: 10,
+    marginBottom: 0,
     textAlign: 'center',
     marginTop: 15,
   },
   playButton: {
     borderRadius: 50,
-    width: 40,
-    height: 40,
-    marginBottom: 10,
+    width: 50,
+    height: 50,
+    marginBottom: 0,
     marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    color: '#1C3546',
   },
   playText: {
     fontSize: 36,
     alignSelf: 'center',
-    marginTop: 5,
+    marginTop: 0,
+    color: '#1C3546',
+  },
+  flipButton: {
+    borderRadius: 50,
+    width: 50,
+    height: 50,
+    marginBottom: 0,
+    marginTop: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#1C3546',
+  },
+  flipText: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginTop: 0,
+    color: '#1C3546',
   },
   playTextBack: {
     fontSize: 40,
     alignSelf: 'center',
-    marginTop: 50,
+    marginTop: 20,
     justifyContent: 'flex-end',
   },
 });

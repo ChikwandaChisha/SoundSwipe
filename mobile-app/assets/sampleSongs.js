@@ -64,14 +64,6 @@ export const SAMPLE_SONGS = [
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5c/e7/39/5ce73933-8f42-1095-e84b-0caec311f54b/24CRGIM43010.rgb.jpg/800x800bb.jpg"
   },
   {
-    "searchTerm": "I Remember Everything Zach Bryan",
-    "foundId": "1703217516",
-    "foundName": "I Remember Everything (feat. Kacey Musgraves)",
-    "foundArtist": "Zach Bryan",
-    "foundSongUrl": "https://music.apple.com/us/album/i-remember-everything-feat-kacey-musgraves/1703216858?i=1703217516",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ce/36/7f/ce367f3d-2a4f-46ee-1434-e3fbb52f1fc8/093624849797.jpg/800x800bb.jpg"
-  },
-  {
     "searchTerm": "Too Sweet Hozier",
     "foundId": "1735414394",
     "foundName": "Too Sweet",

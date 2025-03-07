@@ -1,36 +1,4 @@
 export const SAMPLE_SONGS = [
-   {
-    "searchTerm": "Lose Control Teddy Swims",
-    "foundId": "1691699836",
-    "foundName": "Lose Control",
-    "foundArtist": "Teddy Swims",
-    "foundSongUrl": "https://music.apple.com/us/album/lose-control/1691699589?i=1691699836",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/36/19/66/36196640-1561-dc5e-c6bc-1e5f4befa583/093624856771.jpg/800x800bb.jpg"
-  },
-  {
-    "searchTerm": "A Bar Song (Tipsy) Shaboozey",
-    "foundId": "1737085899",
-    "foundName": "A Bar Song (Tipsy)",
-    "foundArtist": "Shaboozey",
-    "foundSongUrl": "https://music.apple.com/us/album/a-bar-song-tipsy/1737085577?i=1737085899",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/97/b5/bc/97b5bca2-6238-2421-4f0d-1f7a39d5d9d4/197342550925_cover.jpg/800x800bb.jpg"
-  },
-  {
-    "searchTerm": "Beautiful Things Benson Boone",
-    "foundId": "1724488124",
-    "foundName": "Beautiful Things",
-    "foundArtist": "Benson Boone",
-    "foundSongUrl": "https://music.apple.com/us/album/beautiful-things/1724488123?i=1724488124",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/54/f4/92/54f49210-e260-b519-ebbd-f4f40ee710cd/054391342751.jpg/800x800bb.jpg"
-  },
-  {
-    "searchTerm": "I Had Some Help Post Malone",
-    "foundId": "1744452425",
-    "foundName": "I Had Some Help (feat. Morgan Wallen)",
-    "foundArtist": "Post Malone",
-    "foundSongUrl": "https://music.apple.com/us/album/i-had-some-help-feat-morgan-wallen/1744452421?i=1744452425",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/84/df/b9/84dfb96b-27c8-4d40-4780-b65ff22790e4/24UMGIM50612.rgb.jpg/800x800bb.jpg"
-  },
   {
     "searchTerm": "Lovin on Me Jack Harlow",
     "foundId": "1715920580",
@@ -238,5 +206,238 @@ export const SAMPLE_SONGS = [
     "foundArtist": "PAWSA",
     "foundSongUrl": "https://music.apple.com/us/album/too-cool-to-be-careless/1753764426?i=1753764427",
     "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/43/c7/81/43c781bd-3411-5443-c377-636a7ae6cae4/cover.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Die with a Smile - Lady Gaga & Bruno Mars",
+    "foundId": "1762656732",
+    "foundName": "Die With A Smile",
+    "foundArtist": "Lady Gaga & Bruno Mars",
+    "foundSongUrl": "https://music.apple.com/us/album/die-with-a-smile/1762656724?i=1762656732",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/11/ae/f2/11aef294-f57c-bab9-c9fc-529162984e62/24UMGIM85348.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "4x4 - Travis Scott",
+    "foundId": "1792323326",
+    "foundName": "4X4",
+    "foundArtist": "Travis Scott",
+    "foundSongUrl": "https://music.apple.com/us/album/4x4/1792323325?i=1792323326",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/c4/3d/3b/c43d3b9d-90ba-0cdd-9614-17f9b034163d/196872779820.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Luther - Kendrick Lamar & SZA",
+    "foundId": "1781270323",
+    "foundName": "luther",
+    "foundArtist": "Kendrick Lamar & SZA",
+    "foundSongUrl": "https://music.apple.com/us/album/luther/1781270319?i=1781270323",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Smile - Morgan Wallen",
+    "foundId": "1785714732",
+    "foundName": "Smile",
+    "foundArtist": "Morgan Wallen",
+    "foundSongUrl": "https://music.apple.com/us/album/smile/1785714729?i=1785714732",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d0/e8/b0/d0e8b0d6-b410-75e7-6bda-76e1a9ad4d15/24UM1IM35199.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "DTMF - Bad Bunny",
+    "foundId": "1787023936",
+    "foundName": "DtMF",
+    "foundArtist": "Bad Bunny",
+    "foundSongUrl": "https://music.apple.com/us/album/dtmf/1787022393?i=1787023936",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/90/5e/7e/905e7ed5-a8fa-a8f3-cd06-0028fdf3afaa/199066342442.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Baile Inolvidable - Bad Bunny",
+    "foundId": "1789236134",
+    "foundName": "BAILE INoLVIDABLE (Mixed)",
+    "foundArtist": "Bad Bunny",
+    "foundSongUrl": "https://music.apple.com/us/album/baile-inolvidable-mixed/1789236119?i=1789236134",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c6/54/51/c654514e-51f0-d24a-d474-a193c87e3228/1fddfafd-b93c-48c1-a5b0-5fb363a53959.png/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Nuevayol - Bad Bunny",
+    "foundId": "1787022572",
+    "foundName": "NUEVAYoL",
+    "foundArtist": "Bad Bunny",
+    "foundSongUrl": "https://music.apple.com/us/album/nuevayol/1787022393?i=1787022572",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/90/5e/7e/905e7ed5-a8fa-a8f3-cd06-0028fdf3afaa/199066342442.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "I'm the Problem - Morgan Wallen",
+    "foundId": "1792812019",
+    "foundName": "I'm The Problem",
+    "foundArtist": "Morgan Wallen",
+    "foundSongUrl": "https://music.apple.com/us/album/im-the-problem/1792811746?i=1792812019",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/39/b5/7d39b5a8-b576-fe3e-b1fe-2ec06ec0900e/25UMGIM05950.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Pink Pony Club - Chappell Roan",
+    "foundId": "1698723327",
+    "foundName": "Pink Pony Club",
+    "foundArtist": "Chappell Roan",
+    "foundSongUrl": "https://music.apple.com/us/album/pink-pony-club/1698723205?i=1698723327",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/fb/65/cb/fb65cb0f-4260-d740-d6f5-bb80c9c27c1b/23UMGIM84225.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "30 for 30 - SZA with Kendrick Lamar",
+    "foundId": "1794644679",
+    "foundName": "30 For 30 (with Kendrick Lamar)",
+    "foundArtist": "SZA",
+    "foundSongUrl": "https://music.apple.com/us/album/30-for-30-with-kendrick-lamar/1794644675?i=1794644679",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/73/05/7d/73057d8f-846c-01b8-2760-6d3c3071c48a/196872790276.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Gimme a Hug - Drake",
+    "foundId": "1796475565",
+    "foundName": "GIMME A HUG",
+    "foundArtist": "Drake",
+    "foundSongUrl": "https://music.apple.com/us/album/gimme-a-hug/1796475285?i=1796475565",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/23/7c/a2/237ca270-9926-4b78-be81-410b6fc85f47/50291.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Nokia - Drake",
+    "foundId": "1796127375",
+    "foundName": "NOKIA",
+    "foundArtist": "Drake",
+    "foundSongUrl": "https://music.apple.com/us/album/nokia/1796127242?i=1796127375",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/34/10/1e/34101e1f-f4b9-907a-ce47-3fba5b3ee5e8/50222.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Squabble Up - Kendrick Lamar",
+    "foundId": "1781316884",
+    "foundName": "squabble up",
+    "foundArtist": "Kendrick Lamar",
+    "foundSongUrl": "https://music.apple.com/us/album/squabble-up/1781316864?i=1781316884",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/54/28/14/54281424-eece-0935-299d-fdd2ab403f92/24UM1IM28978.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "TV Off - Kendrick Lamar featuring Lefty Gunplay",
+    "foundId": "1781316952",
+    "foundName": "tv off (feat. Lefty Gunplay)",
+    "foundArtist": "Kendrick Lamar",
+    "foundSongUrl": "https://music.apple.com/us/album/tv-off-feat-lefty-gunplay/1781316864?i=1781316952",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/54/28/14/54281424-eece-0935-299d-fdd2ab403f92/24UM1IM28978.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Taste - Sabrina Carpenter",
+    "foundId": "1752214910",
+    "foundName": "Taste",
+    "foundArtist": "Sabrina Carpenter",
+    "foundSongUrl": "https://music.apple.com/us/album/taste/1752214909?i=1752214910",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/1c/ca/a11ccab6-7d4c-e041-d028-998bcebeb709/24UMGIM61704.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Timeless - The Weeknd and Playboi Carti",
+    "foundId": "1770393194",
+    "foundName": "Timeless",
+    "foundArtist": "The Weeknd & Playboi Carti",
+    "foundSongUrl": "https://music.apple.com/us/album/timeless/1770393193?i=1770393194",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/af/04/83/af048357-131d-1ca3-fe8a-d7ef3dda68ec/24UM1IM04062.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "That's So True - Gracie Abrams",
+    "foundId": "1775581103",
+    "foundName": "That’s So True",
+    "foundArtist": "Gracie Abrams",
+    "foundSongUrl": "https://music.apple.com/us/album/thats-so-true/1775580883?i=1775581103",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d2/f8/99/d2f89987-d2a5-45a5-1746-c0841c7e9843/24UM1IM17286.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Cheerleader - Porter Robinson",
+    "foundId": "1734339249",
+    "foundName": "Cheerleader",
+    "foundArtist": "Porter Robinson",
+    "foundSongUrl": "https://music.apple.com/us/album/cheerleader/1734339248?i=1734339249",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/6d/97/a5/6d97a5fa-9b74-c8ca-d69d-d713fa866645/810090094748.png/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Yea Yea - Star Bandz",
+    "foundId": "1738897082",
+    "foundName": "Yea Yea",
+    "foundArtist": "STAR BANDZ",
+    "foundSongUrl": "https://music.apple.com/us/album/yea-yea/1738897081?i=1738897082",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ed/eb/ef/edebefa6-cf85-6bc7-0e2a-3ca0588afbb8/artwork.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Angel of My Dreams - JADE",
+    "foundId": "1754238414",
+    "foundName": "Angel Of My Dreams",
+    "foundArtist": "JADE",
+    "foundSongUrl": "https://music.apple.com/us/album/angel-of-my-dreams/1754238138?i=1754238414",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/44/fe/26/44fe26c1-0e3e-2c48-3898-d22eddc8e054/196872245967.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "I'll Do Whatever You Want - Shabaka",
+    "foundId": "1733708856",
+    "foundName": "I’ll Do Whatever You Want (feat. Floating Points & Laraaji)",
+    "foundArtist": "Shabaka",
+    "foundSongUrl": "https://music.apple.com/us/album/ill-do-whatever-you-want-feat-floating-points-laraaji/1733708853?i=1733708856",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/0c/32/dc/0c32dcae-1067-e01e-5ec2-a871ff2e06c0/24UMGIM19154.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Hiss - Megan Thee Stallion",
+    "foundId": "1752024176",
+    "foundName": "HISS",
+    "foundArtist": "Megan Thee Stallion",
+    "foundSongUrl": "https://music.apple.com/us/album/hiss/1752024169?i=1752024176",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/93/1d/8e/931d8ec8-5191-f0df-201b-100731c58cac/075679642554.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Mamushi - Megan Thee Stallion",
+    "foundId": "1776125333",
+    "foundName": "Mamushi (Remix) [feat. TWICE]",
+    "foundArtist": "Megan Thee Stallion",
+    "foundSongUrl": "https://music.apple.com/us/album/mamushi-remix-feat-twice/1776124685?i=1776125333",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/05/6e/d2/056ed29c-1403-8088-6fec-6e95a5996fe3/075679624857.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Chromakopia - Tyler, the Creator",
+    "foundId": "1776500455",
+    "foundName": "Noid",
+    "foundArtist": "Tyler, The Creator",
+    "foundSongUrl": "https://music.apple.com/us/album/noid/1776500452?i=1776500455",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/bd/e9/7dbde97e-b97d-8cc3-0203-218b687408a9/196872555059.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "The Death of Slim Shady (Coup de Grâce) - Eminem",
+    "foundId": "1755022496",
+    "foundName": "Fuel",
+    "foundArtist": "Eminem & JID",
+    "foundSongUrl": "https://music.apple.com/us/album/fuel/1755022177?i=1755022496",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/8b/2c/ce/8b2cced1-ef53-ae9f-df26-5c5d8ad0009e/24UMGIM70968.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Carnival - Ye and Ty Dolla $ign featuring Rich the Kid and Playboi Carti",
+    "foundId": "1762090957",
+    "foundName": "CARNIVAL (feat. Rich The Kid, Playboi Carti)",
+    "foundArtist": "¥$, Kanye West & Ty Dolla $ign",
+    "foundSongUrl": "https://music.apple.com/us/album/carnival-feat-rich-the-kid-playboi-carti/1762090727?i=1762090957",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1b/f2/c1/1bf2c1ed-97de-3c77-3a2b-9f468fcdd26c/355393.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Texas Hold 'Em - Beyoncé",
+    "foundId": "1731200160",
+    "foundName": "TEXAS HOLD 'EM",
+    "foundArtist": "Beyoncé",
+    "foundSongUrl": "https://music.apple.com/us/album/texas-hold-em/1731199864?i=1731200160",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/5e/5d/9a/5e5d9a95-cb03-fa28-f922-e8a950fd426a/196871868006.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Yes, And? - Ariana Grande",
+    "foundId": "1724584201",
+    "foundName": "yes, and?",
+    "foundArtist": "Ariana Grande",
+    "foundSongUrl": "https://music.apple.com/us/album/yes-and/1724584200?i=1724584201",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d3/ad/e3/d3ade3eb-d25c-6287-8479-05ff7b944a88/24UMGIM00198.rgb.jpg/800x800bb.jpg"
+  },
+  {
+    "searchTerm": "Redrum - 21 Savage",
+    "foundId": "1725240530",
+    "foundName": "redrum",
+    "foundArtist": "21 Savage",
+    "foundSongUrl": "https://music.apple.com/us/album/redrum/1725240183?i=1725240530",
+    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/77/84/5e/77845ee7-573c-efcc-4ce4-c9625fdce8c7/196871714556.jpg/800x800bb.jpg"
   }
+
 ]

@@ -19,7 +19,8 @@ const MusicTile = ({
     albumCover,
     backgroundColor,
     animatedStyle,
-    trackUrl, 
+    trackUrl,
+    onPlayStateChange,
 }) => {
     
   const [isPlaying, setIsPlaying] = useState(false);
@@ -71,6 +72,7 @@ const MusicTile = ({
           newSound = createdSound;
           setSound(createdSound);
           setIsPlaying(true);
+          onPlayStateChange?.(true);
         } catch (err) {
           console.warn('Error creating audio', err);
         }
@@ -83,18 +85,21 @@ const MusicTile = ({
       if (newSound) {
         newSound.unloadAsync();
       }
+      onPlayStateChange?.(false);
     };
   }, [trackUrl]);
 
   // handlePlayPause toggles the existing loaded sound:
   const handlePlayPause = async () => {
     if (!sound) return;
-    if (!isPlaying) {
+    const newPlayState = !isPlaying;
+    if (newPlayState) {
       await sound.playAsync();
     } else {
       await sound.pauseAsync();
     }
-    setIsPlaying(!isPlaying);
+    setIsPlaying(newPlayState);
+    onPlayStateChange?.(newPlayState);
   };
     
 

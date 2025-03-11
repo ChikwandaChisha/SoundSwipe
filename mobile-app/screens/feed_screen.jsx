@@ -68,6 +68,18 @@ export function FeedScreen({ navigation }) {
     opacity.value = withTiming(1, { duration: 800 });
   };
 
+  const handlePreviousSong = () => {
+    if (currentIndex > 0) {
+      opacity.value = 0;
+      translateX.value = 0;
+      translateY.value = 0;
+      rotate.value = 0;
+      setCurrentIndex((prev) => prev - 1);
+      opacity.value = withTiming(1, { duration: 800 });
+    }
+    directionLocked.value = null;
+  };
+
   // when user changes songs, fetch from Apple Music's catalog
   useEffect(() => {
     const fetchPreviewUrl = async () => {
@@ -154,16 +166,20 @@ export function FeedScreen({ navigation }) {
       if (directionLocked.value === "horizontal") {
         translateX.value = event.translationX;
         rotate.value = event.translationX / 10;
-      } else if (directionLocked.value === "vertical" && event.translationY < 0) { 
+      } else if (directionLocked.value === "vertical") { 
         translateY.value = event.translationY;
       }
     })
     .onEnd((event) => {
-      if (directionLocked.value === "vertical" && event.translationY < -150) {
-        runOnJS(handleNextSong)();
+      if (directionLocked.value === "vertical") {
+        if (event.translationY < -150) {
+          runOnJS(handleNextSong)();
+        } else if (event.translationY > 150) {
+          runOnJS(handlePreviousSong)();
+        }
       } else if (directionLocked.value === "horizontal") {
         if (event.translationX > 150) {
-          runOnJS(handleShowPlaylist)(); // change back to playlist when ready (next song for now)
+          runOnJS(handleShowPlaylist)();
         } else if (event.translationX < -150) {
           runOnJS(handleNextSong)();
         }

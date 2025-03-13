@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator 
 import { auth } from "../services/firebaseConfig";
 
 export function CreateSearchScreen({ navigation }) {
-  const api = "https://soundswipe.onrender.com/api/v1/search-sessions/create"
-  // const api = "ocalhost:5001/api/v1/search-sessions/create"
+  const api = "https://soundswipe.onrender.com/api/v1/search-sessions/create";
   const [searchData, setSearchData] = useState({
     title: "",
     genre: "",
@@ -33,7 +32,7 @@ export function CreateSearchScreen({ navigation }) {
       genre: searchData.genre,
       instruments: searchData.instruments,
       similar_songs: searchData.similar_songs,
-    }
+    };
 
     console.log("REQUEST BODY being sent to backend: ", requestBody);
     setLoading(true);
@@ -52,7 +51,11 @@ export function CreateSearchScreen({ navigation }) {
 
       if (response.ok) {
         console.log("Search session created:", data);
-        navigation.replace("FeedScreen", { searchResults: data["recommendation"] }); // Pass search results
+        const { sessionId, recommendation } = data; // Ensure sessionId is part of the response
+        console.log(recommendation);
+
+        // Pass both sessionId and recommendation to FeedScreen
+        navigation.replace("FeedScreen", { sessionId, searchResults: recommendation });
       } else {
         console.error("API Error:", data.error);
         alert(`Error: ${data.error}`);

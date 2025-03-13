@@ -104,12 +104,12 @@ const MusicTile = ({
     
 
   return (
-    <Animated.View style={[styles.container]}>
+    <Animated.View style={[styles.container, animatedStyle,]}>
       <View style={styles.cardContainer}>
 
         {/* Front side */}
         <Animated.View
-          style={[styles.card, backgroundColor, animatedStyle, frontAnimations]}
+          style={[styles.card, frontAnimations, backgroundColor]}
         >
           <View style={[styles.face]}>
             <Image source={{ uri: albumCover }} style={styles.image} />
@@ -134,7 +134,7 @@ const MusicTile = ({
         </Animated.View>
 
         {/* Back side */}
-        <Animated.View style={[styles.card, styles.back, backAnimations]}>
+        <Animated.View style={[styles.card, styles.back, backAnimations, backgroundColor]}>
           <View style={[styles.face]}>
             <Text style={styles.backText}>The Back</Text>
             <TouchableOpacity style={styles.flipButton} onPress={handleFlip}>
@@ -164,6 +164,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: 'absolute',
     backfaceVisibility: 'hidden',
+    // backgroundColor: (255, 255, 255, 0),
+    // opacity: 0,
   },
   face: {
     flex: 1,
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   back: {
-    backgroundColor: '#D0D7E1',
+    // backgroundColor: '#D0D7E1',
   },
   backText: {
     fontSize: 22,

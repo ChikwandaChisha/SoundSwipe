@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { auth } from "../services/firebaseConfig";
 
 export function CreateSearchScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -7,10 +8,48 @@ export function CreateSearchScreen({ navigation }) {
   const [instruments, setInstruments] = useState("");
   const [similarSongs, setSimilarSongs] = useState("");
   const [isKeyboardActive, setIsKeyboardActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleCreateSearch = () => {
+  const handleCreateSearch = async () => {
     console.log({ name, genre, instruments, similarSongs });
-    navigation.replace("FeedScreen");
+    const user = auth.currentUser;
+    console.log("Current User:", user);
+
+    if (!user) {
+      alert("Failed to get user id, please close the app and login to authenticate.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await fetch("https://project-api-soundswipe.onrender.com/api/v1/search-sessions/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user.uid,  
+          input: 
+          `Name: ${name}, 
+          Genre: ${genre}, 
+          Instruments: ${instruments}, 
+          Similar Songs: ${similarSongs}`
+        }),
+      });
+  
+      const data = await response.json();
+      setLoading(false);
+  
+      if (response.ok) {
+        console.log("Search session created:", data);
+        navigation.replace("FeedScreen"); 
+      } else {
+        console.error("API Error:", data.error);
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("Failed to connect to the server.");
+    }
   };
 
   const goBack = () => {
@@ -29,7 +68,7 @@ export function CreateSearchScreen({ navigation }) {
 
       <TextInput 
         style={styles.input} 
-        placeholder="Name" 
+        placeholder="Name of search" 
         placeholderTextColor="#888" 
         value={name} 
         onChangeText={setName} 
@@ -65,7 +104,7 @@ export function CreateSearchScreen({ navigation }) {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleCreateSearch}>
-        <Text style={styles.buttonText}>Create Search</Text>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Search</Text>}
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.backButton} onPress={goBack}>
@@ -80,7 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#C9E7E0",
     alignItems: "center",
-    justifyContent: "start",
+    justifyContent: "flex-start",
     paddingHorizontal: 20,
   },
   title: {
@@ -148,7 +187,7 @@ const styles = StyleSheet.create({
   backButton: {
     padding: 10,
     marginTop: 30,
-    alignSelf: "start",
+    alignSelf: "flex-start",
   },
   backButtonText: {
     fontSize: 16,

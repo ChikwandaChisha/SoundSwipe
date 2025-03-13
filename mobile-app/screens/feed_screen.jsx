@@ -12,8 +12,6 @@ export function FeedScreen({ route, navigation }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const currentSong = songs[currentIndex];
 
-  console.log(songs);
-
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const rotate = useSharedValue(0);
@@ -59,13 +57,11 @@ export function FeedScreen({ route, navigation }) {
       }
 
       const data = await response.json();
-      console.log("Fetched Data:", data); // Debugging line
 
       if (typeof data === "object") {
         // Clear old songs and set the new recommendations
         setSongs(data["recommendation"]);
         setTimeout(() => setCurrentIndex(0), 0);
-        console.log("New songs set: ", data["recommendation"]);
       } else {
         console.error("Unexpected response format:", data);
       }
@@ -88,8 +84,6 @@ export function FeedScreen({ route, navigation }) {
       action: validAction,
     };
 
-    console.log("Sending payload:", JSON.stringify(payload));
-
     try {
       const response = await fetch(SESSION_STORAGE_API_URL, {
         method: "POST",
@@ -107,7 +101,7 @@ export function FeedScreen({ route, navigation }) {
   };
 
   const handleNextSong = () => {
-    console.log("CURRENT INDEX: ", currentIndex);
+
     if (currentIndex < songs.length - 1) {
       opacity.value = 0;
       translateX.value = 0;

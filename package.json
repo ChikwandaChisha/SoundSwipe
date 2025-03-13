@@ -14,5 +14,8 @@
     "install:api": "cd project-api-soundswipe && npm install",
     "clean": "rm -rf node_modules && cd mobile-app && rm -rf node_modules && cd ../project-api-soundswipe && rm -rf node_modules",
     "reset": "npm run clean && npm run install:all"
+  },
+  "dependencies": {
+    "expo-av": "~15.0.2"
   }
-} 
+}

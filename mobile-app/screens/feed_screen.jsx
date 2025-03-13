@@ -177,7 +177,7 @@ export function FeedScreen({ route, navigation }) {
       <View style={styles.container}>
         <GestureDetector gesture={swipeGesture}>
           <MusicTile
-            title={currentSong.foundName}
+            title={currentSong.searchTerm}
             artist={currentSong.foundArtist}
             albumCover={currentSong.artworkUrl}
             songId={currentSong.foundId}

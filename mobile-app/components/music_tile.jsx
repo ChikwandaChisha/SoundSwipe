@@ -59,6 +59,7 @@ const MusicTile = ({
   // auto play-pause every time new track is loaded
   useEffect(() => {
     let newSound = null;
+    setSound(null);
     const loadAudio = async () => {
       // if there is an old sound loaded unload it first
       if (sound) {

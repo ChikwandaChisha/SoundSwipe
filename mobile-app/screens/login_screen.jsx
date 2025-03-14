@@ -141,7 +141,7 @@ export function LoginScreen({ navigation }) {
                     <Text style={[styles.loginTitle, isKeyboardActive && styles.shrinkTitle ]}>SOUNDSWIPE</Text> 
                     <Text style={styles.loginSubtitle}> USER LOG IN</Text>
                     <View style={styles.noticeContainer}>
-                        <Text style={styles.noticeHeader}>NOTE:</Text>
+                        <Text style={styles.noticeHeader}>Note:</Text>
                         <Text style={styles.noticeText}>You must have an existing Apple Music account to use SoundSwipe. You will be prompted to connect your Apple Music account after logging in.</Text>
                     </View>
                     <View style={styles.inputContainer}>
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginHorizontal: 20,
     marginTop: 20,
-    marginBottom: 80,
+    marginBottom: 50,
     alignItems: 'center',
   },
   noticeHeader: {

@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Animated, TextInput, TouchableOpacity, ActivityIndicator, Dimensions, PanResponder, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
-
+import { Video, ResizeMode} from 'expo-av';
 import swipeIcon from '../assets/swipeIcon.png';
 import { signInAndEnsureUserDoc } from '../services/authService';
+import LottieView from 'lottie-react-native';
+import Svg, { Circle, TSpan, TextPath, G } from 'react-native-svg';
 
 const API_URL = "https://project-api-soundswipe.onrender.com/api/v1";
 
@@ -116,9 +118,18 @@ export function LoginScreen({ navigation }) {
             <Animated.View {...panResponder.panHandlers} style={[styles.landingScreen, { transform: [{ translateY }] }]}>
                 <View style={styles.landingScreenText}>
                     <Text style={styles.title}>SOUNDSWIPE</Text>
+                    <View style={styles.waveContainer}>
+                      <LottieView
+                      source={require('../assets/animation.json')}
+                      autoPlay
+                      style={styles.wave}
+                      loop
+                      />
+                    </View>
                     <Text style={styles.subtitle}>Discover New Music Instantly.</Text>
-                    <Text style={styles.subtitle}>Sample and add new songs to your Apple Music playlists with just a swipe.</Text>
-                    <Text style={styles.subtitle}>Getter better recommendations and build new playlists with the songs you like.</Text>
+                    <Text style={styles.text}>Sample and add new songs to your Apple Music playlists with just a swipe.</Text>
+                    <Text style={styles.text}>Getter better recommendations and build new playlists with the songs you like.</Text>
+                    
                 </View>
 
                 {/* <View style={styles.statusBox}>
@@ -205,7 +216,6 @@ const styles = StyleSheet.create({
     fontSize: 45,
     color: '#1C3546',
     marginTop: 100,
-    marginBottom: 50,
     fontFamily: "Josefin Sans",
     fontWeight: 700,
 },
@@ -229,10 +239,21 @@ const styles = StyleSheet.create({
     color: '#305975',
     marginBottom: 30,
     textAlign: 'center',
-    fontWeight: 500,
+    fontWeight: 600,
     fontFamily: "Josefin Sans",
     paddingLeft: 10,
     paddingRight: 10
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#1C3546',
+    marginBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontFamily: "Josefin Sans",
+    fontWeight: 300,
+
   },
   loginSubtitle: {
     fontSize: 24,
@@ -381,6 +402,16 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 10,
   },
+  waveContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+
+  },
+  wave: {
+    height: 150,
+    width: 200,
+  }
 
 });
 

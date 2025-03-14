@@ -25,6 +25,7 @@ export function FeedScreen({ route, navigation }) {
   const NEW_RECOMMENDATION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/recommendations?sessionId=${sessionId}`;
   const SESSION_STORAGE_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/${sessionId}/update`;
   const DESCRIPTION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/descriptions`;
+  
   useEffect(() => {
     const fetchPreviewUrl = async () => {
       if (!currentSong || !currentSong.foundId) {
@@ -66,10 +67,7 @@ export function FeedScreen({ route, navigation }) {
       if (typeof data === "object") {
         // Clear old songs and set the new recommendations
         setSongs(data["recommendation"]);
-        setTimeout(() => setCurrentIndex(0), 0);
-        console.log("Current song before set", currentSong);
-        currentSong = songs[currentIndex];
-        console.log("Current song after set", currentSong);
+
       } else {
         console.error("Unexpected response format:", data);
       }
@@ -118,6 +116,9 @@ export function FeedScreen({ route, navigation }) {
       setCurrentIndex((prev) => prev + 1);
       opacity.value = withTiming(1, { duration: 800 });
       if (currentIndex >= songs.length - 2) fetchNewData();
+    }
+    else {
+      setCurrentIndex(0);
     }
     directionLocked.value = null;
   };

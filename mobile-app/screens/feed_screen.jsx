@@ -67,7 +67,7 @@ export function FeedScreen({ route, navigation }) {
       if (typeof data === "object") {
         // Clear old songs and set the new recommendations
         setSongs(data["recommendation"]);
-        // setTimeout(() => setCurrentIndex(0), 0);
+
       } else {
         console.error("Unexpected response format:", data);
       }
@@ -210,7 +210,7 @@ export function FeedScreen({ route, navigation }) {
       <View style={styles.container}>
         <GestureDetector gesture={swipeGesture}>
           <MusicTile
-            title={currentSong.foundName}
+            title={currentSong.searchTerm}
             artist={currentSong.foundArtist}
             albumCover={currentSong.artworkUrl}
             songId={currentSong.foundId}

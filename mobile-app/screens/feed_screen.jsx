@@ -11,7 +11,6 @@ export function FeedScreen({ route, navigation }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [showPlaylist, setShowPlaylist] = useState(false);
-
   const currentSong = songs[currentIndex];
   const [currDesc, setCurrDesc] = useState(null)
   const [album, setAlbum] = useState(null);
@@ -26,12 +25,6 @@ export function FeedScreen({ route, navigation }) {
   const NEW_RECOMMENDATION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/recommendations?sessionId=${sessionId}`;
   const SESSION_STORAGE_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/${sessionId}/update`;
   const DESCRIPTION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/descriptions`;
-
-
-  // const playbackTimer = useRef(null);
-  // const lastPlayTime = useRef(null);
-  // const remainingTime = useRef(30000); // 30 seconds
-
   useEffect(() => {
     const fetchPreviewUrl = async () => {
       if (!currentSong || !currentSong.foundId) {
@@ -56,10 +49,6 @@ export function FeedScreen({ route, navigation }) {
         setPreviewUrl(null);
       }
     };
-    // if (currDesc === null) {
-    //   getDescription();
-    // }
-
     fetchPreviewUrl();
     getDescription();
   }, [currentSong]);
@@ -73,7 +62,6 @@ export function FeedScreen({ route, navigation }) {
       }
 
       const data = await response.json();
-      console.log(`new data: ${data}`);
 
       if (typeof data === "object") {
         // Clear old songs and set the new recommendations
@@ -266,6 +254,5 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
-
   });
 export default FeedScreen;

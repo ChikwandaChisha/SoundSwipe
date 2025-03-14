@@ -10,7 +10,11 @@ export function FeedScreen({ route, navigation }) {
   const [songs, setSongs] = useState(searchResults);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [showPlaylist, setShowPlaylist] = useState(false);
+
   const currentSong = songs[currentIndex];
+  const [currDesc, setCurrDesc] = useState(null)
+  const [album, setAlbum] = useState(null);
 
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
@@ -21,6 +25,12 @@ export function FeedScreen({ route, navigation }) {
   const APPLE_MUSIC_DEV_TOKEN = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNYOEY3TFNQOUgifQ.eyJpc3MiOiJaSE02RDM0UTlXIiwiaWF0IjoxNzQxMjk1Mzc5LCJleHAiOjE3NTY3NjA5Nzl9.wKPH7XgkKFV1bj7Cd5S4Qbm9mqhi8p5ixsju8HMHGFvqMvuYjmTRH8oncO6iv3TDxjkPwPoLQMELMybh3SORqA";
   const NEW_RECOMMENDATION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/recommendations?sessionId=${sessionId}`;
   const SESSION_STORAGE_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/${sessionId}/update`;
+  const DESCRIPTION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/descriptions`;
+
+
+  // const playbackTimer = useRef(null);
+  // const lastPlayTime = useRef(null);
+  // const remainingTime = useRef(30000); // 30 seconds
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
@@ -36,6 +46,8 @@ export function FeedScreen({ route, navigation }) {
           }
         );
         const data = await resp.json();
+        const album = data?.data?.[0]?.attributes?.albumName;
+        if (album != null) setAlbum(album);;
         const previewItems = data?.data?.[0]?.attributes?.previews;
         if (previewItems?.length) setPreviewUrl(previewItems[0].url);
         else setPreviewUrl(null);
@@ -44,8 +56,12 @@ export function FeedScreen({ route, navigation }) {
         setPreviewUrl(null);
       }
     };
+    // if (currDesc === null) {
+    //   getDescription();
+    // }
 
     fetchPreviewUrl();
+    getDescription();
   }, [currentSong]);
 
   const fetchNewData = async () => {
@@ -57,6 +73,7 @@ export function FeedScreen({ route, navigation }) {
       }
 
       const data = await response.json();
+      console.log(`new data: ${data}`);
 
       if (typeof data === "object") {
         // Clear old songs and set the new recommendations
@@ -168,6 +185,30 @@ export function FeedScreen({ route, navigation }) {
     backgroundColor: interpolateColor(translateX.value, [-200, 0, 200], ['#ff7070', '#fff', '#87ffa3']),
   }));
 
+  const addSongs = () => {
+    setShowPlaylist(false);
+    handleNextSong();
+  };
+
+  const getDescription = async () => {
+    try {
+      const response = await fetch(DESCRIPTION_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"song": currentSong.searchTerm}),
+      });
+      const data = await response.json();
+      console.log(data);
+      const {description} = data;
+      if (description != null) setCurrDesc(description);
+    } catch (error) {
+      console.error("API Error:", data.error);
+      alert(`Error: ${data.error}`);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.replace("ProfileScreen")}>
@@ -184,6 +225,8 @@ export function FeedScreen({ route, navigation }) {
             trackUrl={previewUrl}
             animatedStyle={animatedStyle}
             backgroundColor={backgroundColor}
+            description={currDesc}
+            album={album}
           />
         </GestureDetector>
       </View>

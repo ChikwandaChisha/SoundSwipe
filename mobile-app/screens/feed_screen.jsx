@@ -4,6 +4,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolateColor, runOnJS } from 'react-native-reanimated';
 import MusicTile from '../components/music_tile';
 import PlaylistTile from '../components/playlist_tile';
+import { SAMPLE_PLAYLISTS } from '../assets/samplePlaylists'
 
 export function FeedScreen({ route, navigation }) {
   const { searchResults, sessionId } = route.params || { searchResults: [], sessionId: "" };
@@ -14,6 +15,7 @@ export function FeedScreen({ route, navigation }) {
   const currentSong = songs[currentIndex];
   const [currDesc, setCurrDesc] = useState(null)
   const [album, setAlbum] = useState(null);
+  const [playlists, setPlaylists] = useState(SAMPLE_PLAYLISTS);
 
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
@@ -135,6 +137,11 @@ export function FeedScreen({ route, navigation }) {
     directionLocked.value = null;
   };
 
+  const handleShowPlaylist = () => {
+    setShowPlaylist(true);
+    directionLocked.value = null;
+  };
+
   const swipeGesture = Gesture.Pan()
     .onUpdate((event) => {
       if (directionLocked.value === null) {
@@ -155,6 +162,7 @@ export function FeedScreen({ route, navigation }) {
         else if (event.translationY > 150) runOnJS(handlePrevSong)();
       } else if (directionLocked.value === "horizontal") {
         if (event.translationX > 150) {
+          runOnJS(handleShowPlaylist)();
           runOnJS(handleNextSong)();
           runOnJS(updateSearchSession)("likedSongs");
         } else if (event.translationX < -150) {
@@ -206,21 +214,33 @@ export function FeedScreen({ route, navigation }) {
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.replace("ProfileScreen")}>
         <Text style={styles.backButtonText}>← Back</Text>
       </TouchableOpacity>
-
       <View style={styles.container}>
-        <GestureDetector gesture={swipeGesture}>
-          <MusicTile
-            title={currentSong.searchTerm}
+        {showPlaylist ? (
+          <PlaylistTile 
+            onClose={() => setShowPlaylist(false)} 
+            cover={currentSong.artworkUrl}
+            title={currentSong.foundName}
             artist={currentSong.foundArtist}
-            albumCover={currentSong.artworkUrl}
-            songId={currentSong.foundId}
-            trackUrl={previewUrl}
-            animatedStyle={animatedStyle}
-            backgroundColor={backgroundColor}
-            description={currDesc}
-            album={album}
+            playlists={playlists}
+            addSong={addSongs}
           />
-        </GestureDetector>
+        ) : (
+          <>
+            <GestureDetector gesture={swipeGesture}>
+              <MusicTile
+                title={currentSong.searchTerm}
+                artist={currentSong.foundArtist}
+                albumCover={currentSong.artworkUrl}
+                songId={currentSong.foundId}
+                trackUrl={previewUrl}
+                animatedStyle={animatedStyle}
+                backgroundColor={backgroundColor}
+                description={currDesc}
+                album={album}
+              />
+            </GestureDetector>
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -248,6 +268,9 @@ const styles = StyleSheet.create({
       marginTop: 20,
     },
     backButton: {
+      position: 'absolute',
+      top: 20,
+      left: 20,
       paddingVertical: 8,
       paddingHorizontal: 12,
       borderRadius: 10,

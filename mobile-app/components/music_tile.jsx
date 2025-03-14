@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     margin: 10,
     color: '#1C3546',
+    textAlign: 'center',
   },
   backArtist: {
     textAlign: 'center',

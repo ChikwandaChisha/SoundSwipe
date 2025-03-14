@@ -131,7 +131,7 @@ const ProfileScreen = ({ navigation, route }) => {
       <Text style={styles.title}>SOUNDSWIPE</Text>
       <View style={styles.profileSection}>
         <View style={styles.profilePic} />
-        <Text style={styles.username}>@username</Text>
+        <Text style={styles.username}>username</Text>
       </View>
 
       {/* Apple Music Connection Status */}

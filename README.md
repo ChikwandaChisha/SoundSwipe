@@ -34,19 +34,23 @@ To set up the project development environment, following the instructions below:
 ```
 git clone https://github.com/dartmouth-cs52-25w/project-soundswipe/tree/main
 ```
-2. Install dependencies:
+2. CD into mobile-app folder:
+```
+cd mobile-app
+```
+3. Install dependencies:
 ```
 npm install
 ```
-3. Start the development server:
+4. Start the development server:
 ```
 npx expo start --tunnel
 ```
-4. You should now see a QR code. Scan it to view our app in Expo Go!
+5. You should now see a QR code. Scan it to view our app in Expo Go!
 
 ## Deployment
 
-TBD
+[Deployed Backend API URL](https://soundswipe.onrender.com/api/v1)
 
 ## Authors
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator 
 import { auth } from "../services/firebaseConfig";
 
 export function CreateSearchScreen({ navigation }) {
-  const api = "https://soundswipe.onrender.com/api/v1/search-sessions/create";
+  const api = "https://project-api-soundswipe.onrender.com/api/v1/search-sessions/create";
   const [searchData, setSearchData] = useState({
     title: "",
     genre: "",

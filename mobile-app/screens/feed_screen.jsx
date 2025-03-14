@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolateColor, runOnJS } from 'react-native-reanimated';
 import MusicTile from '../components/music_tile';
 import PlaylistTile from '../components/playlist_tile';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export function FeedScreen({ route, navigation }) {
   const { searchResults, sessionId } = route.params || { searchResults: [], sessionId: "" };
   const [songs, setSongs] = useState(searchResults);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const currentSong = songs[currentIndex];
 
   const translateY = useSharedValue(0);
@@ -23,10 +21,6 @@ export function FeedScreen({ route, navigation }) {
   const APPLE_MUSIC_DEV_TOKEN = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkNYOEY3TFNQOUgifQ.eyJpc3MiOiJaSE02RDM0UTlXIiwiaWF0IjoxNzQxMjk1Mzc5LCJleHAiOjE3NTY3NjA5Nzl9.wKPH7XgkKFV1bj7Cd5S4Qbm9mqhi8p5ixsju8HMHGFvqMvuYjmTRH8oncO6iv3TDxjkPwPoLQMELMybh3SORqA";
   const NEW_RECOMMENDATION_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/recommendations?sessionId=${sessionId}`;
   const SESSION_STORAGE_API_URL = `https://soundswipe.onrender.com/api/v1/search-sessions/${sessionId}/update`;
-
-  const playbackTimer = useRef(null);
-  const lastPlayTime = useRef(null);
-  const remainingTime = useRef(30000); // 30 seconds
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
@@ -132,26 +126,6 @@ export function FeedScreen({ route, navigation }) {
     directionLocked.value = null;
   };
 
-  const handlePlayPause = (playing) => {
-    setIsPlaying(playing);
-    if (playing) {
-      lastPlayTime.current = Date.now();
-      if (playbackTimer.current) {
-        clearTimeout(playbackTimer.current);
-      }
-      playbackTimer.current = setTimeout(() => {
-        handleNextSong();
-        setIsPlaying(false); // Stop playing when auto-advancing
-      }, remainingTime.current);
-    } else {
-      if (playbackTimer.current) {
-        clearTimeout(playbackTimer.current);
-        const elapsedSinceLastPlay = Date.now() - lastPlayTime.current;
-        remainingTime.current = Math.max(0, remainingTime.current - elapsedSinceLastPlay);
-      }
-    }
-  };
-
   const swipeGesture = Gesture.Pan()
     .onUpdate((event) => {
       if (directionLocked.value === null) {
@@ -196,16 +170,8 @@ export function FeedScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity 
-        style={{
-          position: 'absolute',
-          top: 50,
-          left: 20,
-          zIndex: 1,
-        }}
-        onPress={() => navigation.replace("ProfileScreen")}
-      >
-        <MaterialIcons name="arrow-back" size={28} color="#1C3546" />
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.replace("ProfileScreen")}>
+        <Text style={styles.backButtonText}>← Back</Text>
       </TouchableOpacity>
 
       <View style={styles.container}>
@@ -224,6 +190,7 @@ export function FeedScreen({ route, navigation }) {
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
     safeArea: {

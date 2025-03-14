@@ -21,6 +21,8 @@ const MusicTile = ({
     animatedStyle,
     trackUrl,
     onPlayStateChange,
+    description,
+    album,
 }) => {
     
   const [isPlaying, setIsPlaying] = useState(false);
@@ -134,9 +136,17 @@ const MusicTile = ({
         </Animated.View>
 
         {/* Back side */}
-        <Animated.View style={[styles.card, styles.back, backAnimations, backgroundColor]}>
-          <View style={[styles.face]}>
-            <Text style={styles.backText}>The Back</Text>
+        <Animated.View style={[styles.card, backAnimations, backgroundColor]}>
+          <View style={[styles.face, styles.back]}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subtitle}>Originally featured on</Text>
+          <Text style={styles.album}>{album}</Text>
+          <View style={styles.artistCard}>
+            <Text style={styles.subtitle2}>About the Artist</Text>
+            <Text style={styles.backArtist}>{artist}</Text>
+            <Text style={styles.desc}>{description}</Text>
+
+          </View>
             <TouchableOpacity style={styles.flipButton} onPress={handleFlip}>
               <Text style={styles.flipText}>…</Text>
             </TouchableOpacity>
@@ -172,13 +182,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
-  },
-  back: {
-    // backgroundColor: '#D0D7E1',
-  },
-  backText: {
-    fontSize: 22,
-    color: '#FFF',
   },
   image: {
     width: 250,
@@ -240,6 +243,51 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'flex-end',
   },
+  back: {
+    // backgroundColor: '#D0D7E1',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    rowGap: 10,
+    padding: 20,
+    textAlign: 'center'
+  },
+  album: {
+    fontSize: 25,
+    margin: 10,
+    color: '#1C3546',
+  },
+  backArtist: {
+    textAlign: 'center',
+    color: '#C9E7E0',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#1C3546',
+    textAlign: 'center',
+    margin: 5,
+  },
+  subtitle2: {
+    fontSize: 24,
+    color: '#FFF',
+    textAlign: 'center'
+  },
+  desc: {
+    fontSize: 22,
+    color: '#FFF',
+    textAlign: 'center'
+  },
+  artistCard: {
+    backgroundColor: '#1C3546',
+    width: 250,
+    height: 330,
+    borderRadius: 30,
+    padding: 20,
+    rowGap: 25,
+    justifyContent: 'flex-start',
+  }
 });
 
 export default MusicTile;

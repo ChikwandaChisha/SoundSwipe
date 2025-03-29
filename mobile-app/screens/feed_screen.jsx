@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, SafeAreaView, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolateColor, runOnJS } from 'react-native-reanimated';
@@ -16,6 +16,9 @@ export function FeedScreen({ route, navigation }) {
   const [currDesc, setCurrDesc] = useState(null)
   const [album, setAlbum] = useState(null);
   const [playlists, setPlaylists] = useState(SAMPLE_PLAYLISTS);
+  const [playTime, setPlayTime] = useState(0);
+  const playTimeRef = useRef(0);
+  const timerRef = useRef(null);
 
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
@@ -55,6 +58,33 @@ export function FeedScreen({ route, navigation }) {
     fetchPreviewUrl();
     getDescription();
   }, [currentSong]);
+
+  // Add timer effect
+  useEffect(() => {
+    if (previewUrl) {
+      // Reset play time when song changes
+      setPlayTime(0);
+      playTimeRef.current = 0;
+
+      // Start timer
+      timerRef.current = setInterval(() => {
+        playTimeRef.current += 1;
+        setPlayTime(playTimeRef.current);
+
+        // Move to next song after 30 seconds
+        if (playTimeRef.current >= 30) {
+          handleNextSong();
+        }
+      }, 1000);
+
+      // Cleanup timer on unmount or when song changes
+      return () => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+      };
+    }
+  }, [previewUrl]);
 
   const fetchNewData = async () => {
     try {
@@ -109,7 +139,6 @@ export function FeedScreen({ route, navigation }) {
   };
 
   const handleNextSong = () => {
-
     if (currentIndex < songs.length - 1) {
       opacity.value = 0;
       translateX.value = 0;
